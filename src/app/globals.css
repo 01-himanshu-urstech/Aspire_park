@@ -1,0 +1,273 @@
+@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import "slick-carousel/slick/slick.css";
+@import "slick-carousel/slick/slick-theme.css";
+
+:root {
+  --acp-ivory: #f7f0e5;
+  --acp-cream: #fbf7f0;
+  --acp-gold: #c7a96b;
+  --acp-gold-light: #d8c38f;
+  --acp-gold-dark: #9d7b3f;
+  --acp-champagne: #e9d8b6;
+  --acp-deep-green: #0c3b35;
+  --acp-dark: #171714;
+  --acp-charcoal: #24231f;
+  --acp-white: #ffffff;
+  --acp-muted: #746f64;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--acp-ivory);
+  color: var(--acp-dark);
+  font-family: "Manrope", sans-serif;
+}
+
+.font-display {
+  font-family: "Cormorant Garamond", serif;
+}
+
+.acp-container {
+  @apply mx-auto max-w-7xl px-4 md:px-8;
+}
+
+.acp-panel {
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(199, 169, 107, 0.35);
+  box-shadow: 0 18px 50px rgba(23, 23, 20, 0.06);
+}
+
+.gold-line {
+  position: relative;
+  display: inline-block;
+}
+
+.gold-line::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -10px;
+  width: 84px;
+  height: 1px;
+  background: rgba(199, 169, 107, 0.9);
+}
+
+.acp-btn-primary {
+  @apply inline-flex items-center justify-center rounded-full border border-[#c7a96b] bg-[#c7a96b] px-6 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-[#171714] transition hover:bg-[#d8c38f];
+}
+
+.acp-btn-secondary {
+  @apply inline-flex items-center justify-center rounded-full border border-[#0c3b35] bg-[#0c3b35] px-6 py-3 text-xs font-semibold uppercase tracking-[0.18em] text-[#f7f0e5] transition hover:bg-[#123f39];
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--acp-dark);
+  -webkit-box-shadow: 0 0 0 1000px var(--acp-ivory) inset;
+  transition: background-color 9999s ease-in-out 0s;
+}
+
+.acp-card {
+  @apply rounded-[28px] border border-[#d8c38f]/40 bg-white/70 backdrop-blur-sm;
+}
+
+.custom-counter {
+  counter-reset: list-counter 14;
+}
+
+.custom-counter li {
+  counter-increment: list-counter;
+}
+
+.custom-counter li::before {
+  content: counter(list-counter) ". ";
+}
+@keyframes trustScroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes benefitFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes benefitCardReveal {
+  from {
+    opacity: 0;
+    transform: translateY(30px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes benefitPriceReveal {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.94);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes paymentFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes paymentScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes paymentLineReveal {
+  from {
+    opacity: 0;
+    width: 0;
+  }
+
+  to {
+    opacity: 1;
+    width: 48px;
+  }
+}
+
+@keyframes paymentProgress {
+  from {
+    width: 0;
+  }
+
+  to {
+    width: 80%;
+  }
+}
+
+@keyframes paymentCardReveal {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes gaursFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes gaursLogoReveal {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes amenityCardReveal {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@keyframes modalFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes modalScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.96) translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+@keyframes marquee-right {
+  from {
+    transform: translateX(-50%);
+  }
+
+  to {
+    transform: translateX(0);
+  }
+}
+
+.animate-marquee-right {
+  animation: marquee-right 25s linear infinite;
+}
