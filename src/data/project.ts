@@ -24,12 +24,13 @@ export const projectData = {
   ],
   overview: [
     { value: "12 ACRES", label: "project expanse" },
-    { value: "1000 UNITS", label: "residential apartments" },
-    { value: "32 FLOORS", label: "in each typical tower" },
+    { value: "1065 UNITS", label: "residential apartments" },
+    { value: "30 FLOORS", label: "in each typical tower" },
+    { value: "45 FLOORS", label: "in iconic tower" },
     { value: "11 TOWERS", label: "including iconic tower" },
     { value: "7 LIFTS", label: "in iconic tower" },
     { value: "6 ACRES", label: "green area" },
-    { value: "45,000 SQ. FT.", label: "lavish clubhouse" },
+    { value: "40,000 SQ. FT.", label: "lavish clubhouse" },
   ],
   configurations: [
     {

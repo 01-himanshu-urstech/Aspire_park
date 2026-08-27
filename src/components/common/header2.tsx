@@ -524,11 +524,11 @@ const Header2: React.FC = () => {
       </header>
 
       {/* Enquiry Modal */}
-      <PopUpModal
+      {/* <PopUpModal
         isOpen={isModalOpen}
         onClose={handleClose}
         onOpen={handleOpen}
-      />
+      /> */}
     </>
   );
 };
