@@ -117,11 +117,18 @@ const Footer: React.FC = () => {
             <div className="mt-7 flex items-start gap-3 text-sm text-[#f7f0e5]/65">
               <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[#d8c38f]" />
 
-              <span>
-                Techzone-4,
-                <br />
-                Greater Noida (W)
-              </span>
+              <div>
+                <span className="block">
+                  Techzone-4,
+                  <br />
+                  Greater Noida (W)
+                </span>
+
+                {/* RERA Number */}
+                <span className="mt-3 block text-[10px] uppercase tracking-[0.16em] text-[#d8c38f]/80">
+                  RERA No. UPRERAPRJ11256
+                </span>
+              </div>
             </div>
           </div>
 
@@ -179,7 +186,7 @@ const Footer: React.FC = () => {
                   <Phone className="h-3.5 w-3.5 text-[#d8c38f]" />
                 </span>
 
-                +91 70544 42848
+                +91 70544 42848, +91 84471 71933
               </a>
 
               <a

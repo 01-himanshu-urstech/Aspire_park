@@ -3476,11 +3476,11 @@ const submitLeadForm = async (
                     <Phone className="h-4 w-4 text-[#d8c38f]" />
                   </span>
 
-                  +91 70544 42848
+                  +91 70544 42848, +91 84471 71933
                 </a>
 
                 <a
-                  href="https://wa.me/919999999999"
+                  href="https://wa.me/+917054442848"
                   target="_blank"
                   rel="noreferrer"
                   className="flex items-center gap-4 text-sm transition hover:text-[#d8c38f]"
@@ -3671,7 +3671,7 @@ const submitLeadForm = async (
           </a>
 
           <a
-            href="https://wa.me/919999999999"
+            href="https://wa.me/+917054442848"
             target="_blank"
             rel="noreferrer"
             className="flex flex-col items-center justify-center gap-1 bg-[#d8c38f] py-2.5 text-[#171714]"

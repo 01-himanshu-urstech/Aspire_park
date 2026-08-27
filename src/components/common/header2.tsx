@@ -283,7 +283,7 @@ const Header2: React.FC = () => {
                 </span>
 
                 <span className="mt-0.5 text-[10px] tracking-[0.08em] text-[#f7f0e5]/90">
-                  +91 70544 42848
+                  +91 70544 42848, +91 84471 71933
                 </span>
               </span>
             </a>
