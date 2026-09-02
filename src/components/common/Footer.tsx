@@ -126,7 +126,7 @@ const Footer: React.FC = () => {
 
                 {/* RERA Number */}
                 <span className="mt-3 block text-[10px] uppercase tracking-[0.16em] text-[#d8c38f]/80">
-                  RERA No. UPRERAPRJ11256
+                  RERA No. UPRERAAGT14634
                 </span>
               </div>
             </div>
@@ -257,14 +257,14 @@ const Footer: React.FC = () => {
             >
               Terms & Conditions
             </Link>
-
-            {/* <Link
+            <Link
               href="/privacy-policy"
               className="transition hover:text-[#d8c38f]"
             >
               Privacy Policy
             </Link>
 
+            {/*
             <Link
               href="#contact"
               className="transition hover:text-[#d8c38f]"
