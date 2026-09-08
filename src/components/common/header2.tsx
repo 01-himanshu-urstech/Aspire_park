@@ -54,108 +54,107 @@ const Header2: React.FC = () => {
         className={`
           fixed inset-x-0 top-0 z-[100] w-full
           transition-all duration-500 ease-out
-          ${
-            isScrolled
-              ? "border-b border-[#c7a96b]/30 bg-[#0c3b35]/95 shadow-[0_8px_30px_rgba(0,0,0,0.12)] backdrop-blur-xl"
-              : "border-b border-white/10 bg-[#0c3b35]/55 backdrop-blur-md"
+          ${isScrolled
+            ? "border-b border-[#c7a96b]/30 bg-[#0c3b35]/95 shadow-[0_8px_30px_rgba(0,0,0,0.12)] backdrop-blur-xl"
+            : "border-b border-white/10 bg-[#0c3b35]/55 backdrop-blur-md"
           }
         `}
       >
         {/* Top luxury strip */}
-{/* ========================================================= */}
-{/* TOP INFORMATION STRIP                                    */}
-{/* ========================================================= */}
+        {/* ========================================================= */}
+        {/* TOP INFORMATION STRIP                                    */}
+        {/* ========================================================= */}
 
-<div className="hidden border-b border-[#c7a96b]/20 bg-[#171714]/40 lg:block">
-  <div className="flex h-8 w-full items-center">
+        <div className="hidden border-b border-[#c7a96b]/20 bg-[#171714]/40 lg:block">
+          <div className="flex h-8 w-full items-center">
 
-    {/* LEFT — STATIC */}
-    <div className="flex shrink-0 items-center px-6 xl:px-10">
-      <span className="mr-3 h-1 w-1 rounded-full bg-[#c7a96b]" />
+            {/* LEFT — STATIC */}
+            <div className="flex shrink-0 items-center px-6 xl:px-10">
+              <span className="mr-3 h-1 w-1 rounded-full bg-[#c7a96b]" />
 
-      <span className="whitespace-nowrap text-[9px] font-medium uppercase tracking-[0.28em] text-[#f7f0e5]/70">
-        Aspire Centurian Park
-      </span>
+              <span className="whitespace-nowrap text-[9px] font-medium uppercase tracking-[0.28em] text-[#f7f0e5]/70">
+                Aspire Centurian Park
+              </span>
 
-      <span className="mx-3 text-[#c7a96b]/50">|</span>
+              <span className="mx-3 text-[#c7a96b]/50">|</span>
 
-      <span className="whitespace-nowrap text-[9px] uppercase tracking-[0.22em] text-[#d8c38f]">
-        Grand Luxury Residences
-      </span>
-    </div>
+              <span className="whitespace-nowrap text-[9px] uppercase tracking-[0.22em] text-[#d8c38f]">
+                Grand Luxury Residences
+              </span>
+            </div>
 
-    {/* RIGHT — MOVING */}
-    <div className="relative min-w-0 flex-1 overflow-hidden border-l border-[#c7a96b]/20">
+            {/* RIGHT — MOVING */}
+            <div className="relative min-w-0 flex-1 overflow-hidden border-l border-[#c7a96b]/20">
 
-      <div className="flex w-max animate-marquee-right">
+              <div className="flex w-max animate-marquee-right">
 
-        {/* FIRST SET */}
-        <div className="flex shrink-0 items-center">
+                {/* FIRST SET */}
+                <div className="flex shrink-0 items-center">
 
-          <div className="flex items-center px-8">
-            <span className="mr-3 h-1.5 w-1.5 rounded-full bg-[#c7a96b]" />
-            <span className="whitespace-nowrap text-[9px] uppercase tracking-[0.2em] text-[#f7f0e5]/65">
-              Techzone-4, Greater Noida (W)
-            </span>
+                  <div className="flex items-center px-8">
+                    <span className="mr-3 h-1.5 w-1.5 rounded-full bg-[#c7a96b]" />
+                    <span className="whitespace-nowrap text-[9px] uppercase tracking-[0.2em] text-[#f7f0e5]/65">
+                      Techzone-4, Greater Noida (W)
+                    </span>
+                  </div>
+
+                  <span className="h-4 w-px bg-[#c7a96b]/20" />
+
+                  <div className="flex items-center px-8">
+                    <span className="mr-3 h-1.5 w-1.5 rounded-full bg-[#c7a96b]" />
+                    <span className="whitespace-nowrap text-[9px] uppercase tracking-[0.2em] text-[#d8c38f]">
+                      RERA Registered Project
+                    </span>
+                  </div>
+
+                  <span className="h-4 w-px bg-[#c7a96b]/20" />
+
+                  <div className="flex items-center px-8">
+                    <span className="mr-3 h-1.5 w-1.5 rounded-full bg-[#c7a96b]" />
+                    <span className="whitespace-nowrap text-[9px] uppercase tracking-[0.2em] text-[#f7f0e5]/65">
+                      Supreme Court Monitored Project
+                    </span>
+                  </div>
+
+                  <span className="mx-4 h-4 w-px bg-[#c7a96b]/20" />
+                </div>
+
+
+                {/* DUPLICATE — FOR SEAMLESS LOOP */}
+                <div className="flex shrink-0 items-center">
+
+                  <div className="flex items-center px-8">
+                    <span className="mr-3 h-1.5 w-1.5 rounded-full bg-[#c7a96b]" />
+                    <span className="whitespace-nowrap text-[9px] uppercase tracking-[0.2em] text-[#f7f0e5]/65">
+                      Techzone-4, Greater Noida (W)
+                    </span>
+                  </div>
+
+                  <span className="h-4 w-px bg-[#c7a96b]/20" />
+
+                  <div className="flex items-center px-8">
+                    <span className="mr-3 h-1.5 w-1.5 rounded-full bg-[#c7a96b]" />
+                    <span className="whitespace-nowrap text-[9px] uppercase tracking-[0.2em] text-[#d8c38f]">
+                      RERA Registered Project
+                    </span>
+                  </div>
+
+                  <span className="h-4 w-px bg-[#c7a96b]/20" />
+
+                  <div className="flex items-center px-8">
+                    <span className="mr-3 h-1.5 w-1.5 rounded-full bg-[#c7a96b]" />
+                    <span className="whitespace-nowrap text-[9px] uppercase tracking-[0.2em] text-[#f7f0e5]/65">
+                      Supreme Court Monitored Project
+                    </span>
+                  </div>
+
+                  <span className="mx-4 h-4 w-px bg-[#c7a96b]/20" />
+                </div>
+
+              </div>
+            </div>
           </div>
-
-          <span className="h-4 w-px bg-[#c7a96b]/20" />
-
-          <div className="flex items-center px-8">
-            <span className="mr-3 h-1.5 w-1.5 rounded-full bg-[#c7a96b]" />
-            <span className="whitespace-nowrap text-[9px] uppercase tracking-[0.2em] text-[#d8c38f]">
-              RERA Registered Project
-            </span>
-          </div>
-
-          <span className="h-4 w-px bg-[#c7a96b]/20" />
-
-          <div className="flex items-center px-8">
-            <span className="mr-3 h-1.5 w-1.5 rounded-full bg-[#c7a96b]" />
-            <span className="whitespace-nowrap text-[9px] uppercase tracking-[0.2em] text-[#f7f0e5]/65">
-              Supreme Court Monitored Project
-            </span>
-          </div>
-
-          <span className="mx-4 h-4 w-px bg-[#c7a96b]/20" />
         </div>
-
-
-        {/* DUPLICATE — FOR SEAMLESS LOOP */}
-        <div className="flex shrink-0 items-center">
-
-          <div className="flex items-center px-8">
-            <span className="mr-3 h-1.5 w-1.5 rounded-full bg-[#c7a96b]" />
-            <span className="whitespace-nowrap text-[9px] uppercase tracking-[0.2em] text-[#f7f0e5]/65">
-              Techzone-4, Greater Noida (W)
-            </span>
-          </div>
-
-          <span className="h-4 w-px bg-[#c7a96b]/20" />
-
-          <div className="flex items-center px-8">
-            <span className="mr-3 h-1.5 w-1.5 rounded-full bg-[#c7a96b]" />
-            <span className="whitespace-nowrap text-[9px] uppercase tracking-[0.2em] text-[#d8c38f]">
-              RERA Registered Project
-            </span>
-          </div>
-
-          <span className="h-4 w-px bg-[#c7a96b]/20" />
-
-          <div className="flex items-center px-8">
-            <span className="mr-3 h-1.5 w-1.5 rounded-full bg-[#c7a96b]" />
-            <span className="whitespace-nowrap text-[9px] uppercase tracking-[0.2em] text-[#f7f0e5]/65">
-              Supreme Court Monitored Project
-            </span>
-          </div>
-
-          <span className="mx-4 h-4 w-px bg-[#c7a96b]/20" />
-        </div>
-
-      </div>
-    </div>
-  </div>
-</div>
 
         {/* Main navbar */}
         <div className="mx-auto flex h-[76px] max-w-[1500px] items-center justify-between px-5 sm:px-7 lg:h-[82px] lg:px-10 xl:px-14">
@@ -212,7 +211,7 @@ const Header2: React.FC = () => {
               />
             </div>
           </Link>
-          
+
           {/* Desktop Navigation */}
           <nav className="hidden items-center gap-1 xl:flex">
             {navLinks.map((item) => (
@@ -405,10 +404,9 @@ const Header2: React.FC = () => {
             overflow-hidden border-t border-[#c7a96b]/20
             bg-[#0c3b35]/98 backdrop-blur-xl
             transition-all duration-500 md:hidden
-            ${
-              isMenuOpen
-                ? "max-h-[calc(100vh-76px)] opacity-100"
-                : "max-h-0 opacity-0"
+            ${isMenuOpen
+              ? "max-h-[calc(100vh-76px)] opacity-100"
+              : "max-h-0 opacity-0"
             }
           `}
         >
@@ -524,11 +522,11 @@ const Header2: React.FC = () => {
       </header>
 
       {/* Enquiry Modal */}
-      {/* <PopUpModal
+      <PopUpModal
         isOpen={isModalOpen}
         onClose={handleClose}
         onOpen={handleOpen}
-      /> */}
+      />
     </>
   );
 };

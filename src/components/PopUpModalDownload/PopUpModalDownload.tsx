@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 
 interface ModalProps {
@@ -8,6 +9,7 @@ interface ModalProps {
 }
 
 const PopUpModalDownload: React.FC<ModalProps> = ({ isOpen, onClose, onOpen }) => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -65,6 +67,7 @@ const PopUpModalDownload: React.FC<ModalProps> = ({ isOpen, onClose, onOpen }) =
       downloadPDF();
 
       onClose(); // Close the modal after submission
+      router.push("/thank_you");
     } catch (error) {
       console.error("Error sending email:", error);
     } finally {
@@ -75,10 +78,10 @@ const PopUpModalDownload: React.FC<ModalProps> = ({ isOpen, onClose, onOpen }) =
   // Function to download the PDF
   const downloadPDF = () => {
     // Use window.location to trigger the download of the PDF from the server
-    const pdfUrl = "/dummy.pdf"; // The URL of the PDF in your public folder
+    const pdfUrl = "/brochure.pdf";
     const link = document.createElement("a");
     link.href = pdfUrl;
-    link.download = "Lodha Vrindavan.pdf"; // Filename to be used when downloading
+    link.download = "Aspire-Centurian-Park-Brochure.pdf";
     link.click(); // Trigger the download
   };
 

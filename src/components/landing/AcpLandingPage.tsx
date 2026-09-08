@@ -2,6 +2,7 @@
 
 import { projectData } from "@/data/project";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import { FaWhatsapp } from "react-icons/fa";
@@ -96,6 +97,7 @@ const amenityCards = {
 };
 
 export default function AcpLandingPage() {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<AmenityTab>("club");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isBrochureRequest, setIsBrochureRequest] = useState(false);
@@ -223,6 +225,8 @@ const submitHeroForm = async (e: React.FormEvent) => {
       phone: "",
       email: "",
     });
+
+    router.push("/thank_you");
   } catch (error) {
     console.error(error);
 
@@ -280,6 +284,8 @@ const submitLeadForm = async (
       setIsModalOpen(false);
       setIsBrochureRequest(false);
     }
+
+    router.push("/thank_you");
   } catch (error) {
     console.error("Lead submission failed:", error);
     toast.error("Something went wrong. Please try again.");

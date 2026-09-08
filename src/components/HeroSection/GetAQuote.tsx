@@ -1,6 +1,7 @@
 "use client";
 
 import { FC, useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Slider from "react-slick";
 import axios from "axios";
@@ -13,6 +14,7 @@ interface FormData {
 }
 
 const GetAQuote: FC = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState<FormData>({
     name: "",
     phone: "",
@@ -78,7 +80,7 @@ const GetAQuote: FC = () => {
       if (response.status === 200) {
         setMessage("Thank you for contacting us!");
         setFormData({ name: "", phone: "", email: "" });
-        setTimeout(() => setMessage(""), 3000);
+        router.push("/thank_you");
       }
     } catch (error) {
       setMessage("Failed to send your enquiry. Please try again later.");

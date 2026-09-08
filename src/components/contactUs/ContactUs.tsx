@@ -353,9 +353,11 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { FaUser, FaPhone, FaEnvelope } from "react-icons/fa";
 
 export default function ContactUs() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -427,15 +429,10 @@ export default function ContactUs() {
       console.log("Success:", result);
 
       if (result.success) {
-        // Show success message immediately
         setIsSubmitted(true);
-
-        // Reset form after showing success message
-        setTimeout(() => {
-          setFormData({ name: "", phone: "", email: "" });
-          setErrors({ phone: "", general: "" });
-          setIsSubmitted(false);
-        }, 3000);
+        setFormData({ name: "", phone: "", email: "" });
+        setErrors({ phone: "", general: "" });
+        router.push("/thank_you");
       } else {
         setErrors((prev) => ({
           ...prev,

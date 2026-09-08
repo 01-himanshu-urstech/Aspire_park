@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
 import {
@@ -13,17 +14,18 @@ import {
 } from "lucide-react";
 // import "react-toastify/dist/ReactToastify.css";
 
+const POPUP_SUBMITTED_KEY = "aspire_enquiry_submitted";
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   onOpen: () => void;
 }
-
 const PopUpModal: React.FC<ModalProps> = ({
   isOpen,
   onClose,
   onOpen,
 }) => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -45,15 +47,24 @@ const PopUpModal: React.FC<ModalProps> = ({
   /* ========================================================= */
 
   useEffect(() => {
+    const hasSubmittedInSession =
+      sessionStorage.getItem(POPUP_SUBMITTED_KEY) === "true";
+
+    if (hasSubmittedInSession) {
+      return;
+    }
+
     const timer = setTimeout(() => {
-      if (!isOpen && !hasSubmittedSuccessfully) {
+      const submitted =
+        sessionStorage.getItem(POPUP_SUBMITTED_KEY) === "true";
+
+      if (!isOpen && !submitted && !hasSubmittedSuccessfully) {
         onOpen();
       }
     }, 7000);
 
     return () => clearTimeout(timer);
   }, [isOpen, onOpen, hasSubmittedSuccessfully]);
-
   /* ========================================================= */
   /* LOCK BODY SCROLL                                          */
   /* ========================================================= */
@@ -164,6 +175,12 @@ const PopUpModal: React.FC<ModalProps> = ({
       });
 
       setHasSubmittedSuccessfully(true);
+
+      // Remember successful enquiry for this browser session
+      sessionStorage.setItem(POPUP_SUBMITTED_KEY, "true");
+
+      onClose();
+      router.push("/thank_you");
     } catch (error) {
       console.error("Error sending email:", error);
 
@@ -355,7 +372,7 @@ const PopUpModal: React.FC<ModalProps> = ({
                 md:text-[44px]
               "
             >
-              Your Dream Home & 
+              Your Dream Home &
               <br />
               <span className="text-[#d8c38f]">
                 Investment Awaits.
