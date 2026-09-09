@@ -48,7 +48,7 @@ const amenityCards = {
     },
     {
       name: "Gazebo & Lily Pond",
-      image: "/acp_assets/amenities/Gazebo & Lily Pond.jpg",
+      image: "/acp_assets/amenities/Gazebo-Lily-Pond.jpg",
     },
   ],
 
@@ -113,7 +113,7 @@ export default function AcpLandingPage() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  
+
 
   useEffect(() => {
     document.body.style.overflow = isModalOpen ? "hidden" : "";
@@ -134,165 +134,165 @@ export default function AcpLandingPage() {
     return () => window.removeEventListener("open-brochure", openBrochure);
   }, []);
 
-const activeAmenityCards = amenityCards[activeTab];
-const [heroForm, setHeroForm] = useState({
-  name: "",
-  phone: "",
-  email: "",
-});
-
-const [heroFormErrors, setHeroFormErrors] = useState({
-  name: "",
-  phone: "",
-  email: "",
-});
-
-const [isHeroSubmitting, setIsHeroSubmitting] = useState(false);
-const [contactForm, setContactForm] = useState({
-  name: "",
-  phone: "",
-  email: "",
-  configuration: "3 BHK",
-});
-const [isContactSubmitting, setIsContactSubmitting] = useState(false);
-const [enquiryForm, setEnquiryForm] = useState({
-  name: "",
-  phone: "",
-  email: "",
-  configuration: "3 BHK",
-});
-const [isEnquirySubmitting, setIsEnquirySubmitting] = useState(false);
-
-const handleHeroFormChange = (
-  e: React.ChangeEvent<HTMLInputElement>
-) => {
-  const { name, value } = e.target;
-
-  setHeroForm((prev) => ({
-    ...prev,
-    [name]: value,
-  }));
-
-  setHeroFormErrors((prev) => ({
-    ...prev,
-    [name]: "",
-  }));
-};
-
-const submitHeroForm = async (e: React.FormEvent) => {
-  e.preventDefault();
-
-  const errors = {
+  const activeAmenityCards = amenityCards[activeTab];
+  const [heroForm, setHeroForm] = useState({
     name: "",
     phone: "",
     email: "",
+  });
+
+  const [heroFormErrors, setHeroFormErrors] = useState({
+    name: "",
+    phone: "",
+    email: "",
+  });
+
+  const [isHeroSubmitting, setIsHeroSubmitting] = useState(false);
+  const [contactForm, setContactForm] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    configuration: "3 BHK",
+  });
+  const [isContactSubmitting, setIsContactSubmitting] = useState(false);
+  const [enquiryForm, setEnquiryForm] = useState({
+    name: "",
+    phone: "",
+    email: "",
+    configuration: "3 BHK",
+  });
+  const [isEnquirySubmitting, setIsEnquirySubmitting] = useState(false);
+
+  const handleHeroFormChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { name, value } = e.target;
+
+    setHeroForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+
+    setHeroFormErrors((prev) => ({
+      ...prev,
+      [name]: "",
+    }));
   };
 
-  if (!heroForm.name.trim()) {
-    errors.name = "Name is required.";
-  }
+  const submitHeroForm = async (e: React.FormEvent) => {
+    e.preventDefault();
 
-  if (!heroForm.phone) {
-    errors.phone = "Phone number is required.";
-  } else if (!/^[0-9]{10}$/.test(heroForm.phone)) {
-    errors.phone = "Enter a valid 10-digit number.";
-  }
-
-  if (
-    heroForm.email &&
-    !/\S+@\S+\.\S+/.test(heroForm.email)
-  ) {
-    errors.email = "Enter a valid email.";
-  }
-
-  setHeroFormErrors(errors);
-
-  if (errors.name || errors.phone || errors.email) {
-    return;
-  }
-
-  try {
-    setIsHeroSubmitting(true);
-
-    await axios.post("/api/sendEmail", heroForm);
-
-    toast.success(
-      "Thank you. Our team will contact you shortly."
-    );
-
-    setHeroForm({
+    const errors = {
       name: "",
       phone: "",
       email: "",
-    });
+    };
 
-    router.push("/thank_you");
-  } catch (error) {
-    console.error(error);
-
-    toast.error(
-      "Something went wrong. Please try again."
-    );
-  } finally {
-    setIsHeroSubmitting(false);
-  }
-};
-
-const updateLeadField = (
-  setter: React.Dispatch<React.SetStateAction<typeof contactForm>>,
-  name: string,
-  value: string
-) => {
-  setter((prev) => ({ ...prev, [name]: value }));
-};
-
-const submitLeadForm = async (
-  e: React.FormEvent<HTMLFormElement>,
-  form: typeof contactForm,
-  reset: React.Dispatch<React.SetStateAction<typeof contactForm>>,
-  setSubmitting: React.Dispatch<React.SetStateAction<boolean>>,
-  closeAfterSubmit = false,
-  downloadAfterSubmit = false
-) => {
-  e.preventDefault();
-
-  if (!form.name.trim() || !/^[0-9]{10}$/.test(form.phone)) {
-    toast.error("Please enter your name and a valid 10-digit number.");
-    return;
-  }
-
-  setSubmitting(true);
-
-  try {
-    const response = await axios.post("/api/sendEmail", form);
-
-    if (!response.data.success) {
-      throw new Error(response.data.error || "Unable to send enquiry");
+    if (!heroForm.name.trim()) {
+      errors.name = "Name is required.";
     }
 
-    toast.success("Thank you. Our team will contact you shortly.");
-    reset({ name: "", phone: "", email: "", configuration: "3 BHK" });
-
-    if (downloadAfterSubmit) {
-      const brochureLink = document.createElement("a");
-      brochureLink.href = "/brochure.pdf";
-      brochureLink.download = "Aspire-Centurian-Park-Brochure.pdf";
-      brochureLink.click();
+    if (!heroForm.phone) {
+      errors.phone = "Phone number is required.";
+    } else if (!/^[0-9]{10}$/.test(heroForm.phone)) {
+      errors.phone = "Enter a valid 10-digit number.";
     }
 
-    if (closeAfterSubmit) {
-      setIsModalOpen(false);
-      setIsBrochureRequest(false);
+    if (
+      heroForm.email &&
+      !/\S+@\S+\.\S+/.test(heroForm.email)
+    ) {
+      errors.email = "Enter a valid email.";
     }
 
-    router.push("/thank_you");
-  } catch (error) {
-    console.error("Lead submission failed:", error);
-    toast.error("Something went wrong. Please try again.");
-  } finally {
-    setSubmitting(false);
-  }
-};
+    setHeroFormErrors(errors);
+
+    if (errors.name || errors.phone || errors.email) {
+      return;
+    }
+
+    try {
+      setIsHeroSubmitting(true);
+
+      await axios.post("/api/sendEmail", heroForm);
+
+      toast.success(
+        "Thank you. Our team will contact you shortly."
+      );
+
+      setHeroForm({
+        name: "",
+        phone: "",
+        email: "",
+      });
+
+      router.push("/thank_you");
+    } catch (error) {
+      console.error(error);
+
+      toast.error(
+        "Something went wrong. Please try again."
+      );
+    } finally {
+      setIsHeroSubmitting(false);
+    }
+  };
+
+  const updateLeadField = (
+    setter: React.Dispatch<React.SetStateAction<typeof contactForm>>,
+    name: string,
+    value: string
+  ) => {
+    setter((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const submitLeadForm = async (
+    e: React.FormEvent<HTMLFormElement>,
+    form: typeof contactForm,
+    reset: React.Dispatch<React.SetStateAction<typeof contactForm>>,
+    setSubmitting: React.Dispatch<React.SetStateAction<boolean>>,
+    closeAfterSubmit = false,
+    downloadAfterSubmit = false
+  ) => {
+    e.preventDefault();
+
+    if (!form.name.trim() || !/^[0-9]{10}$/.test(form.phone)) {
+      toast.error("Please enter your name and a valid 10-digit number.");
+      return;
+    }
+
+    setSubmitting(true);
+
+    try {
+      const response = await axios.post("/api/sendEmail", form);
+
+      if (!response.data.success) {
+        throw new Error(response.data.error || "Unable to send enquiry");
+      }
+
+      toast.success("Thank you. Our team will contact you shortly.");
+      reset({ name: "", phone: "", email: "", configuration: "3 BHK" });
+
+      if (downloadAfterSubmit) {
+        const brochureLink = document.createElement("a");
+        brochureLink.href = "/brochure.pdf";
+        brochureLink.download = "Aspire-Centurian-Park-Brochure.pdf";
+        brochureLink.click();
+      }
+
+      if (closeAfterSubmit) {
+        setIsModalOpen(false);
+        setIsBrochureRequest(false);
+      }
+
+      router.push("/thank_you");
+    } catch (error) {
+      console.error("Lead submission failed:", error);
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   const amenityImages = {
     club: "/acp_assets/amenities/clubhouse.webp",
@@ -302,73 +302,73 @@ const submitLeadForm = async (
   return (
     <main className="overflow-x-hidden bg-[#f7f0e5] text-[#171714]">
       <ToastContainer position="top-center" autoClose={3000} hideProgressBar theme="dark" />
-{/* ========================================================= */}
-{/* HERO                                                      */}
-{/* ========================================================= */}
+      {/* ========================================================= */}
+      {/* HERO                                                      */}
+      {/* ========================================================= */}
 
-<section className="relative min-h-[100svh] overflow-hidden bg-[#0c3b35] text-[#f7f0e5]">
+      <section className="relative min-h-[100svh] overflow-hidden bg-[#0c3b35] text-[#f7f0e5]">
 
-  {/* ======================================================= */}
-  {/* RESPONSIVE HERO IMAGES                                  */}
-  {/* ======================================================= */}
+        {/* ======================================================= */}
+        {/* RESPONSIVE HERO IMAGES                                  */}
+        {/* ======================================================= */}
 
-  {/* Desktop */}
-  <div
-    className="
+        {/* Desktop */}
+        <div
+          className="
       absolute inset-0
       hidden
       bg-cover
       bg-center
       md:block
     "
-    style={{
-      backgroundImage:
-        "url('/hero/hero-desktop (2).jpg')",
-    }}
-  />
+          style={{
+            backgroundImage:
+              "url('/hero/hero-desktop (2).jpg')",
+          }}
+        />
 
-  {/* Mobile */}
-  <div
-    className="
+        {/* Mobile */}
+        <div
+          className="
       absolute inset-0
       block
       bg-cover
       bg-center
       md:hidden
     "
-    style={{
-      backgroundImage:
-        "url('/acp_assets/hero/hero-mobile.webp')",
-    }}
-  />
+          style={{
+            backgroundImage:
+              "url('/acp_assets/hero/hero-mobile.webp')",
+          }}
+        />
 
-  {/* ======================================================= */}
-  {/* LUXURY OVERLAYS                                          */}
-  {/* ======================================================= */}
+        {/* ======================================================= */}
+        {/* LUXURY OVERLAYS                                          */}
+        {/* ======================================================= */}
 
-  <div
-    className="
+        <div
+          className="
       absolute inset-0
       bg-gradient-to-r
       from-[#071f1c]/95
       via-[#0c3b35]/75
       to-[#0c3b35]/35
     "
-  />
+        />
 
-  <div
-    className="
+        <div
+          className="
       absolute inset-0
       bg-gradient-to-t
       from-[#071f1c]
       via-[#071f1c]/20
       to-[#071f1c]/25
     "
-  />
+        />
 
-  {/* Right gold glow */}
-  <div
-    className="
+        {/* Right gold glow */}
+        <div
+          className="
       absolute
       -right-40
       top-20
@@ -378,14 +378,14 @@ const submitLeadForm = async (
       bg-[#d8c38f]/10
       blur-[130px]
     "
-  />
+        />
 
-  {/* ======================================================= */}
-  {/* HERO CONTENT                                             */}
-  {/* ======================================================= */}
+        {/* ======================================================= */}
+        {/* HERO CONTENT                                             */}
+        {/* ======================================================= */}
 
-  <div
-    className="
+        <div
+          className="
       relative
       z-10
       mx-auto
@@ -402,10 +402,10 @@ const submitLeadForm = async (
       lg:pt-28
       xl:px-14
     "
-  >
+        >
 
-    <div
-      className="
+          <div
+            className="
         grid
         w-full
         items-center
@@ -414,20 +414,20 @@ const submitLeadForm = async (
         lg:gap-10
         xl:gap-14
       "
-    >
+          >
 
-      {/* =================================================== */}
-      {/* LEFT CONTENT                                        */}
-      {/* =================================================== */}
+            {/* =================================================== */}
+            {/* LEFT CONTENT                                        */}
+            {/* =================================================== */}
 
-      <div className="max-w-3xl">
+            <div className="max-w-3xl">
 
-        {/* Eyebrow */}
-        <div className="mb-6 flex items-center gap-4 sm:mb-7">
-          <span className="h-px w-10 bg-[#d8c38f] sm:w-12" />
+              {/* Eyebrow */}
+              <div className="mb-6 flex items-center gap-4 sm:mb-7">
+                <span className="h-px w-10 bg-[#d8c38f] sm:w-12" />
 
-          <p
-            className="
+                <p
+                  className="
               text-[9px]
               font-semibold
               uppercase
@@ -435,14 +435,14 @@ const submitLeadForm = async (
               text-[#d8c38f]
               sm:text-[10px]
             "
-          >
-            {projectData.hero.eyebrow}
-          </p>
-        </div>
+                >
+                  {projectData.hero.eyebrow}
+                </p>
+              </div>
 
-        {/* Main heading */}
-        <h1
-          className="
+              {/* Main heading */}
+              <h1
+                className="
             font-display
             text-[52px]
             leading-[0.88]
@@ -453,13 +453,13 @@ const submitLeadForm = async (
             lg:text-[88px]
             xl:text-[100px]
           "
-        >
-          {projectData.hero.heading}
-        </h1>
+              >
+                {projectData.hero.heading}
+              </h1>
 
-        {/* Subtitle */}
-        <div
-          className="
+              {/* Subtitle */}
+              <div
+                className="
             mt-6
             flex
             flex-wrap
@@ -468,9 +468,9 @@ const submitLeadForm = async (
             gap-y-2
             sm:mt-7
           "
-        >
-          <span
-            className="
+              >
+                <span
+                  className="
               font-display
               text-[38px]
               leading-none
@@ -478,12 +478,12 @@ const submitLeadForm = async (
               sm:text-[50px]
               md:text-[56px]
             "
-          >
-            {projectData.hero.subtitle}
-          </span>
+                >
+                  {projectData.hero.subtitle}
+                </span>
 
-          <span
-            className="
+                <span
+                  className="
               mb-1
               text-[9px]
               font-semibold
@@ -492,30 +492,30 @@ const submitLeadForm = async (
               text-[#f7f0e5]/75
               sm:text-xs
             "
-          >
-            {projectData.hero.support}
-          </span>
-        </div>
+                >
+                  {projectData.hero.support}
+                </span>
+              </div>
 
-        {/* Location */}
-        <div className="mt-6 flex items-center gap-3 sm:mt-8">
-          <MapPin className="h-4 w-4 text-[#d8c38f]" />
+              {/* Location */}
+              <div className="mt-6 flex items-center gap-3 sm:mt-8">
+                <MapPin className="h-4 w-4 text-[#d8c38f]" />
 
-          <span
-            className="
+                <span
+                  className="
               text-[13px]
               tracking-[0.06em]
               text-[#f7f0e5]/85
               sm:text-sm
             "
-          >
-            {projectData.hero.locationHint}
-          </span>
-        </div>
+                >
+                  {projectData.hero.locationHint}
+                </span>
+              </div>
 
-        {/* Campaign */}
-        <div
-          className="
+              {/* Campaign */}
+              <div
+                className="
             mt-6
             max-w-2xl
             border-y
@@ -524,19 +524,19 @@ const submitLeadForm = async (
             sm:mt-8
             sm:py-5
           "
-        >
+              >
 
-          <div
-            className="
+                <div
+                  className="
               flex
               flex-wrap
               items-center
               gap-x-5
               gap-y-3
             "
-          >
-            <span
-              className="
+                >
+                  <span
+                    className="
                 text-[9px]
                 font-semibold
                 uppercase
@@ -544,30 +544,30 @@ const submitLeadForm = async (
                 text-[#d8c38f]
                 sm:text-[10px]
               "
-            >
-              {projectData.hero.campaign}
-            </span>
+                  >
+                    {projectData.hero.campaign}
+                  </span>
 
-            <span className="hidden h-4 w-px bg-[#d8c38f]/40 sm:block" />
+                  <span className="hidden h-4 w-px bg-[#d8c38f]/40 sm:block" />
 
-            <span
-              className="
+                  <span
+                    className="
                 font-display
                 text-2xl
                 text-[#f7f0e5]
                 sm:text-3xl
                 md:text-4xl
               "
-            >
-              {projectData.hero.price}
-            </span>
-          </div>
+                  >
+                    {projectData.hero.price}
+                  </span>
+                </div>
 
-          <div className="mt-3 flex flex-wrap gap-2 sm:mt-4">
-            {projectData.hero.payment.map((item) => (
-              <span
-                key={item}
-                className="
+                <div className="mt-3 flex flex-wrap gap-2 sm:mt-4">
+                  {projectData.hero.payment.map((item) => (
+                    <span
+                      key={item}
+                      className="
                   border
                   border-[#d8c38f]/35
                   bg-[#071f1c]/45
@@ -582,19 +582,19 @@ const submitLeadForm = async (
                   sm:px-3
                   sm:text-[9px]
                 "
-              >
-                {item}
-              </span>
-            ))}
-          </div>
-        </div>
+                    >
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
 
-        {/* CTA */}
-        <div className="mt-7 flex flex-col gap-3 sm:mt-9 sm:flex-row">
+              {/* CTA */}
+              <div className="mt-7 flex flex-col gap-3 sm:mt-9 sm:flex-row">
 
-          <button
-            onClick={() => setIsModalOpen(true)}
-            className="
+                <button
+                  onClick={() => setIsModalOpen(true)}
+                  className="
               group
               relative
               flex
@@ -616,13 +616,13 @@ const submitLeadForm = async (
               sm:py-4
               sm:text-[10px]
             "
-          >
-            <span className="relative z-10">
-              Enquire Now
-            </span>
+                >
+                  <span className="relative z-10">
+                    Enquire Now
+                  </span>
 
-            <ArrowRight
-              className="
+                  <ArrowRight
+                    className="
                 relative
                 z-10
                 h-3.5
@@ -631,12 +631,12 @@ const submitLeadForm = async (
                 duration-300
                 group-hover:translate-x-1
               "
-            />
-          </button>
+                  />
+                </button>
 
-          <a
-            href="#residences"
-            className="
+                <a
+                  href="#residences"
+                  className="
               flex
               items-center
               gap-3
@@ -659,30 +659,30 @@ const submitLeadForm = async (
               sm:py-4
               sm:text-[10px]
             "
-          >
-            Explore Residences
-          </a>
+                >
+                  Explore Residences
+                </a>
 
-        </div>
+              </div>
 
-      </div>
+            </div>
 
-{/* =================================================== */}
-{/* RIGHT SIDE                                          */}
-{/* PERMANENT ENQUIRY FORM                              */}
-{/* =================================================== */}
+            {/* =================================================== */}
+            {/* RIGHT SIDE                                          */}
+            {/* PERMANENT ENQUIRY FORM                              */}
+            {/* =================================================== */}
 
-<div
-  className="
+            <div
+              className="
     flex
     w-full
     items-center
     justify-center
     lg:justify-end
   "
->
-  <div
-    className="
+            >
+              <div
+                className="
       w-full
       max-w-[420px]
       border
@@ -696,32 +696,32 @@ const submitLeadForm = async (
       lg:max-w-[390px]
       xl:max-w-[420px]
     "
-  >
+              >
 
-    {/* ================================================= */}
-    {/* FORM HEADER                                       */}
-    {/* ================================================= */}
+                {/* ================================================= */}
+                {/* FORM HEADER                                       */}
+                {/* ================================================= */}
 
-    <div className="mb-5">
+                <div className="mb-5">
 
-      <div className="flex items-center gap-3">
-        <span className="h-px w-8 bg-[#d8c38f]" />
+                  <div className="flex items-center gap-3">
+                    <span className="h-px w-8 bg-[#d8c38f]" />
 
-        <span
-          className="
+                    <span
+                      className="
             text-[9px]
             font-semibold
             uppercase
             tracking-[0.28em]
             text-[#d8c38f]
           "
-        >
-          Register Your Interest
-        </span>
-      </div>
+                    >
+                      Register Your Interest
+                    </span>
+                  </div>
 
-      <h3
-        className="
+                  <h3
+                    className="
           mt-4
           font-display
           text-3xl
@@ -729,48 +729,48 @@ const submitLeadForm = async (
           text-[#0c3b35]
           sm:text-4xl
         "
-      >
-        Your Dream Home & 
-        <br />
-        <span className="text-[#d8c38f]">
-          Investment Awaits.
-        </span>
-      </h3>
+                  >
+                    Your Dream Home &
+                    <br />
+                    <span className="text-[#d8c38f]">
+                      Investment Awaits.
+                    </span>
+                  </h3>
 
-      <p
-        className="
+                  <p
+                    className="
           mt-3
           max-w-sm
           text-[12px]
           leading-5
           text-[#0c3b35]/65
         "
-      >
-        Get complete project details, pricing,
-        floor plans and payment plan information.
-      </p>
+                  >
+                    Get complete project details, pricing,
+                    floor plans and payment plan information.
+                  </p>
 
-    </div>
+                </div>
 
 
-    {/* ================================================= */}
-    {/* FORM                                               */}
-    {/* ================================================= */}
+                {/* ================================================= */}
+                {/* FORM                                               */}
+                {/* ================================================= */}
 
-    <form
-      onSubmit={submitHeroForm}
-      className="space-y-3"
-    >
+                <form
+                  onSubmit={submitHeroForm}
+                  className="space-y-3"
+                >
 
-{/* ================================================= */}
-{/* NAME */}
-{/* ================================================= */}
+                  {/* ================================================= */}
+                  {/* NAME */}
+                  {/* ================================================= */}
 
-<div>
-  <div className="group relative">
+                  <div>
+                    <div className="group relative">
 
-    <User
-      className="
+                      <User
+                        className="
         absolute
         left-3
         top-1/2
@@ -781,16 +781,16 @@ const submitLeadForm = async (
         text-[#d8c38f]
 
       "
-      strokeWidth={1.6}
-    />
+                        strokeWidth={1.6}
+                      />
 
-    <input
-      type="text"
-      name="name"
-      placeholder="Full Name"
-      value={heroForm.name}
-      onChange={handleHeroFormChange}
-      className="
+                      <input
+                        type="text"
+                        name="name"
+                        placeholder="Full Name"
+                        value={heroForm.name}
+                        onChange={handleHeroFormChange}
+                        className="
         h-12
         w-full
         border
@@ -815,108 +815,27 @@ const submitLeadForm = async (
         focus:ring-1
         focus:ring-[#d8c38f]/20
       "
-    />
+                      />
 
-  </div>
+                    </div>
 
-  {heroFormErrors.name && (
-    <p className="mt-1 text-[10px] text-red-400">
-      {heroFormErrors.name}
-    </p>
-  )}
-</div>
-
-
-{/* ================================================= */}
-{/* PHONE */}
-{/* ================================================= */}
-
-<div>
-  <div className="group relative">
-
-    <Phone
-      className="
-        absolute
-        left-3
-        top-1/2
-        z-10
-        h-4
-        w-4
-        -translate-y-1/2
-        text-[#d8c38f]
-        transition-colors
-        duration-200
-      "
-      strokeWidth={1.6}
-    />
-
-    <input
-      type="tel"
-      name="phone"
-      inputMode="numeric"
-      placeholder="10-digit Mobile Number"
-      value={heroForm.phone}
-      onChange={(e) => {
-        const value = e.target.value
-          .replace(/[^0-9]/g, "")
-          .slice(0, 10);
-
-        setHeroForm((prev) => ({
-          ...prev,
-          phone: value,
-        }));
-
-        setHeroFormErrors((prev) => ({
-          ...prev,
-          phone: "",
-        }));
-      }}
-      className="
-        h-12
-        w-full
-        border
-        border-[#d8c38f]/30
-        bg-[#0c3b35]
-        pl-10
-        pr-3
-        text-[14px]
-        font-medium
-        text-white
-        outline-none
-
-        placeholder:text-white/55
-
-        transition-all
-        duration-300
-
-        hover:border-[#d8c38f]/50
-
-        focus:border-[#d8c38f]
-        focus:bg-[#0a332e]
-        focus:ring-1
-        focus:ring-[#d8c38f]/20
-      "
-    />
-
-  </div>
-
-  {heroFormErrors.phone && (
-    <p className="mt-1 text-[10px] text-red-400">
-      {heroFormErrors.phone}
-    </p>
-  )}
-</div>
+                    {heroFormErrors.name && (
+                      <p className="mt-1 text-[10px] text-red-400">
+                        {heroFormErrors.name}
+                      </p>
+                    )}
+                  </div>
 
 
-{/* ================================================= */}
-{/* EMAIL */}
-{/* ================================================= */}
+                  {/* ================================================= */}
+                  {/* PHONE */}
+                  {/* ================================================= */}
 
-<div>
-  <div className="group relative">
+                  <div>
+                    <div className="group relative">
 
-    <Mail
-      className="
+                      <Phone
+                        className="
         absolute
         left-3
         top-1/2
@@ -928,16 +847,31 @@ const submitLeadForm = async (
         transition-colors
         duration-200
       "
-      strokeWidth={1.6}
-    />
+                        strokeWidth={1.6}
+                      />
 
-    <input
-      type="email"
-      name="email"
-      placeholder="Email Address (Optional)"
-      value={heroForm.email}
-      onChange={handleHeroFormChange}
-      className="
+                      <input
+                        type="tel"
+                        name="phone"
+                        inputMode="numeric"
+                        placeholder="10-digit Mobile Number"
+                        value={heroForm.phone}
+                        onChange={(e) => {
+                          const value = e.target.value
+                            .replace(/[^0-9]/g, "")
+                            .slice(0, 10);
+
+                          setHeroForm((prev) => ({
+                            ...prev,
+                            phone: value,
+                          }));
+
+                          setHeroFormErrors((prev) => ({
+                            ...prev,
+                            phone: "",
+                          }));
+                        }}
+                        className="
         h-12
         w-full
         border
@@ -962,22 +896,88 @@ const submitLeadForm = async (
         focus:ring-1
         focus:ring-[#d8c38f]/20
       "
-    />
+                      />
 
-  </div>
+                    </div>
 
-  {heroFormErrors.email && (
-    <p className="mt-1 text-[10px] text-red-400">
-      {heroFormErrors.email}
-    </p>
-  )}
-</div>
+                    {heroFormErrors.phone && (
+                      <p className="mt-1 text-[10px] text-red-400">
+                        {heroFormErrors.phone}
+                      </p>
+                    )}
+                  </div>
 
-      {/* SUBMIT BUTTON */}
-      <button
-        type="submit"
-        disabled={isHeroSubmitting}
-        className="
+
+                  {/* ================================================= */}
+                  {/* EMAIL */}
+                  {/* ================================================= */}
+
+                  <div>
+                    <div className="group relative">
+
+                      <Mail
+                        className="
+        absolute
+        left-3
+        top-1/2
+        z-10
+        h-4
+        w-4
+        -translate-y-1/2
+        text-[#d8c38f]
+        transition-colors
+        duration-200
+      "
+                        strokeWidth={1.6}
+                      />
+
+                      <input
+                        type="email"
+                        name="email"
+                        placeholder="Email Address (Optional)"
+                        value={heroForm.email}
+                        onChange={handleHeroFormChange}
+                        className="
+        h-12
+        w-full
+        border
+        border-[#d8c38f]/30
+        bg-[#0c3b35]
+        pl-10
+        pr-3
+        text-[14px]
+        font-medium
+        text-white
+        outline-none
+
+        placeholder:text-white/55
+
+        transition-all
+        duration-300
+
+        hover:border-[#d8c38f]/50
+
+        focus:border-[#d8c38f]
+        focus:bg-[#0a332e]
+        focus:ring-1
+        focus:ring-[#d8c38f]/20
+      "
+                      />
+
+                    </div>
+
+                    {heroFormErrors.email && (
+                      <p className="mt-1 text-[10px] text-red-400">
+                        {heroFormErrors.email}
+                      </p>
+                    )}
+                  </div>
+
+                  {/* SUBMIT BUTTON */}
+                  <button
+                    type="submit"
+                    disabled={isHeroSubmitting}
+                    className="
           group
           relative
           mt-2
@@ -1001,17 +1001,17 @@ const submitLeadForm = async (
           disabled:cursor-not-allowed
           disabled:opacity-60
         "
-      >
+                  >
 
-        <span className="relative z-10">
-          {isHeroSubmitting
-            ? "Submitting..."
-            : "Request a Callback"}
-        </span>
+                    <span className="relative z-10">
+                      {isHeroSubmitting
+                        ? "Submitting..."
+                        : "Request a Callback"}
+                    </span>
 
-        {!isHeroSubmitting && (
-          <ArrowRight
-            className="
+                    {!isHeroSubmitting && (
+                      <ArrowRight
+                        className="
               relative
               z-10
               h-3.5
@@ -1020,12 +1020,12 @@ const submitLeadForm = async (
               duration-300
               group-hover:translate-x-1
             "
-          />
-        )}
+                      />
+                    )}
 
-        {/* Shine */}
-        <span
-          className="
+                    {/* Shine */}
+                    <span
+                      className="
             absolute
             inset-y-0
             -left-full
@@ -1036,19 +1036,19 @@ const submitLeadForm = async (
             duration-700
             group-hover:left-[130%]
           "
-        />
+                    />
 
-      </button>
+                  </button>
 
-    </form>
+                </form>
 
 
-    {/* ================================================= */}
-    {/* FORM FOOTER                                       */}
-    {/* ================================================= */}
+                {/* ================================================= */}
+                {/* FORM FOOTER                                       */}
+                {/* ================================================= */}
 
-    <div
-      className="
+                <div
+                  className="
         mt-5
         flex
         items-center
@@ -1058,12 +1058,12 @@ const submitLeadForm = async (
         border-[#0c3b35]/15
         pt-4
       "
-    >
+                >
 
-      <span className="h-1 w-1 rounded-full bg-[#d8c38f]" />
+                  <span className="h-1 w-1 rounded-full bg-[#d8c38f]" />
 
-      <span
-        className="
+                  <span
+                    className="
           text-center
           text-[7px]
           uppercase
@@ -1071,27 +1071,27 @@ const submitLeadForm = async (
           text-black
           sm:text-[8px]
         "
-      >
-        3 & 4 BHK Ultra Luxury Residences
-      </span>
+                  >
+                    3 & 4 BHK Ultra Luxury Residences
+                  </span>
 
-      <span className="h-1 w-1 rounded-full bg-[#d8c38f]" />
+                  <span className="h-1 w-1 rounded-full bg-[#d8c38f]" />
 
-    </div>
+                </div>
 
-  </div>
-</div>
-    </div>
-  </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
 
-  {/* ======================================================= */}
-  {/* SCROLL INDICATOR                                        */}
-  {/* ======================================================= */}
+        {/* ======================================================= */}
+        {/* SCROLL INDICATOR                                        */}
+        {/* ======================================================= */}
 
-  <a
-    href="#about"
-    className="
+        <a
+          href="#about"
+          className="
       absolute
       bottom-5
       left-1/2
@@ -1103,84 +1103,82 @@ const submitLeadForm = async (
       gap-2
       md:flex
     "
-  >
-    <span
-      className="
+        >
+          <span
+            className="
         text-[8px]
         uppercase
         tracking-[0.35em]
         text-[#f7f0e5]/50
       "
-    >
-      Explore
-    </span>
+          >
+            Explore
+          </span>
 
-    <ArrowDown
-      className="
+          <ArrowDown
+            className="
         h-4
         w-4
         animate-bounce
         text-[#d8c38f]
       "
-    />
-  </a>
+          />
+        </a>
 
-</section>
-        {/* ========================================================= */}
-        {/* TRUST STRIP                                                */}
-        {/* ========================================================= */}
+      </section>
+      {/* ========================================================= */}
+      {/* TRUST STRIP                                                */}
+      {/* ========================================================= */}
 
-        <section className="relative overflow-hidden border-b border-[#c7a96b]/25 bg-[#f7f0e5]">
+      <section className="relative overflow-hidden border-b border-[#c7a96b]/25 bg-[#f7f0e5]">
         <div className="mx-auto max-w-[1500px] overflow-hidden">
-            <div className="flex w-max animate-[trustScroll_20s_linear_infinite]">
+          <div className="flex w-max animate-[trustScroll_20s_linear_infinite]">
             {/* Original items */}
             {projectData.stats.map((stat, index) => (
-                <div
+              <div
                 key={`original-${stat.value}-${index}`}
                 className={`
                     min-w-[180px] flex-1 px-8 py-8 text-center
-                    ${
-                    index !== projectData.stats.length - 1
-                        ? "border-r border-[#c7a96b]/25"
-                        : ""
-                    }
+                    ${index !== projectData.stats.length - 1
+                    ? "border-r border-[#c7a96b]/25"
+                    : ""
+                  }
                 `}
-                >
+              >
                 <div className="font-display text-4xl text-[#0c3b35] md:text-5xl">
-                    {stat.value}
+                  {stat.value}
                 </div>
 
                 <div className="mt-2 text-[9px] font-medium uppercase tracking-[0.25em] text-[#746f64]">
-                    {stat.label}
+                  {stat.label}
                 </div>
-                </div>
+              </div>
             ))}
 
             {/* Duplicate items for seamless infinite loop */}
             {projectData.stats.map((stat, index) => (
-                <div
+              <div
                 key={`duplicate-${stat.value}-${index}`}
                 className={`
                     min-w-[180px] flex-1 px-8 py-8 text-center
-                    ${
-                    index !== projectData.stats.length - 1
-                        ? "border-r border-[#c7a96b]/25"
-                        : ""
-                    }
+                    ${index !== projectData.stats.length - 1
+                    ? "border-r border-[#c7a96b]/25"
+                    : ""
+                  }
                 `}
-                >
+              >
                 <div className="font-display text-4xl text-[#0c3b35] md:text-5xl">
-                    {stat.value}
+                  {stat.value}
                 </div>
 
                 <div className="mt-2 text-[9px] font-medium uppercase tracking-[0.25em] text-[#746f64]">
-                    {stat.label}
+                  {stat.label}
                 </div>
-                </div>
+              </div>
             ))}
-            </div>
+          </div>
         </div>
-        </section>
+      </section>
 
 
       {/* ========================================================= */}
@@ -1286,7 +1284,7 @@ const submitLeadForm = async (
       {/* DEVELOPER TRUST                                             */}
       {/* ========================================================= */}
 
-        <section className="relative overflow-hidden bg-[#0c3b35] py-24 text-[#f7f0e5] lg:py-32">
+      <section className="relative overflow-hidden bg-[#0c3b35] py-24 text-[#f7f0e5] lg:py-32">
         {/* Background glow */}
         <div className="absolute right-0 top-0 h-full w-1/2 bg-[radial-gradient(circle_at_center,rgba(216,195,143,0.10),transparent_65%)]" />
 
@@ -1294,54 +1292,52 @@ const submitLeadForm = async (
         <div className="absolute -right-32 top-1/2 h-72 w-72 -translate-y-1/2 rounded-full bg-[#d8c38f]/5 blur-[100px] animate-[pulse_6s_ease-in-out_infinite]" />
 
         <div className="relative mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
-            {/* Heading */}
-            <div className="max-w-3xl animate-[fadeUp_700ms_ease-out_both]">
+          {/* Heading */}
+          <div className="max-w-3xl animate-[fadeUp_700ms_ease-out_both]">
             <div className="flex items-center gap-4">
-                <span className="h-px w-10 bg-[#d8c38f] transition-all duration-700 hover:w-20" />
+              <span className="h-px w-10 bg-[#d8c38f] transition-all duration-700 hover:w-20" />
 
-                <span className="text-[9px] font-semibold uppercase tracking-[0.35em] text-[#d8c38f]">
+              <span className="text-[9px] font-semibold uppercase tracking-[0.35em] text-[#d8c38f]">
                 Developer Trust
-                </span>
+              </span>
             </div>
 
             <h2 className="mt-7 font-display text-5xl leading-[0.95] sm:text-6xl lg:text-7xl">
-                3 Decades of
-                <br />
-                <span className="text-[#d8c38f]">
+              3 Decades of
+              <br />
+              <span className="text-[#d8c38f]">
                 Trust & Triumphs.
-                </span>
+              </span>
             </h2>
-            </div>
+          </div>
 
-            {/* Stats */}
-            <div className="mt-16 grid gap-0 border-y border-[#d8c38f]/20 md:grid-cols-2 xl:grid-cols-3">
+          {/* Stats */}
+          <div className="mt-16 grid gap-0 border-y border-[#d8c38f]/20 md:grid-cols-2 xl:grid-cols-3">
             {projectData.stats.map((item, index) => (
-                <div
+              <div
                 key={item.value}
                 className={`
                     group relative overflow-hidden
                     px-7 py-9
                     transition-all duration-500
                     hover:bg-[#d8c38f]/[0.035]
-                    ${
-                    index % 3 !== 2
-                        ? "xl:border-r xl:border-[#d8c38f]/20"
-                        : ""
-                    }
-                    ${
-                    index % 2 !== 1
-                        ? "md:border-r md:border-[#d8c38f]/20 xl:border-r"
-                        : ""
-                    }
+                    ${index % 3 !== 2
+                    ? "xl:border-r xl:border-[#d8c38f]/20"
+                    : ""
+                  }
+                    ${index % 2 !== 1
+                    ? "md:border-r md:border-[#d8c38f]/20 xl:border-r"
+                    : ""
+                  }
                     border-b border-[#d8c38f]/20 last:border-b-0
                 `}
                 style={{
-                    animation: `fadeUp 700ms ease-out ${index * 120}ms both`,
+                  animation: `fadeUp 700ms ease-out ${index * 120}ms both`,
                 }}
-                >
+              >
                 {/* Animated gold line */}
                 <div
-                    className="
+                  className="
                     absolute left-0 top-0
                     h-px w-0
                     bg-[#d8c38f]
@@ -1352,19 +1348,19 @@ const submitLeadForm = async (
 
                 {/* Number */}
                 <div
-                    className="
+                  className="
                     font-display text-5xl text-[#d8c38f]
                     transition-all duration-500
                     group-hover:translate-x-1
                     group-hover:text-[#ead9ae]
                     "
                 >
-                    {item.value}
+                  {item.value}
                 </div>
 
                 {/* Label */}
                 <div
-                    className="
+                  className="
                     mt-3 text-[10px]
                     uppercase tracking-[0.22em]
                     text-[#f7f0e5]/55
@@ -1372,12 +1368,12 @@ const submitLeadForm = async (
                     group-hover:text-[#f7f0e5]/80
                     "
                 >
-                    {item.label}
+                  {item.label}
                 </div>
 
                 {/* Small decorative dot */}
                 <div
-                    className="
+                  className="
                     absolute bottom-7 right-7
                     h-1.5 w-1.5 rounded-full
                     bg-[#d8c38f]/30
@@ -1386,52 +1382,52 @@ const submitLeadForm = async (
                     group-hover:bg-[#d8c38f]
                     "
                 />
-                </div>
+              </div>
             ))}
-            </div>
+          </div>
         </div>
-        </section>
+      </section>
 
 
-    {/* ========================================================= */}
-    {/* ABOUT GAURS / DEVELOPER                                   */}
-    {/* ========================================================= */}
+      {/* ========================================================= */}
+      {/* ABOUT GAURS / DEVELOPER                                   */}
+      {/* ========================================================= */}
 
-    <section
-    id="about"
-    className="
+      <section
+        id="about"
+        className="
         relative overflow-hidden
         bg-[#f7f0e5]
         py-12
         sm:py-18
         lg:py-20
     "
-    >
-    {/* ======================================================= */}
-    {/* Subtle paper texture                                    */}
-    {/* ======================================================= */}
+      >
+        {/* ======================================================= */}
+        {/* Subtle paper texture                                    */}
+        {/* ======================================================= */}
 
-    <div
-        className="
+        <div
+          className="
         pointer-events-none
         absolute inset-0
         opacity-[0.035]
         mix-blend-multiply
         "
-        style={{
-        backgroundImage: `
+          style={{
+            backgroundImage: `
             radial-gradient(#0c3b35 0.7px, transparent 0.7px)
         `,
-        backgroundSize: "5px 5px",
-        }}
-    />
+            backgroundSize: "5px 5px",
+          }}
+        />
 
-    {/* ======================================================= */}
-    {/* Soft background glow                                    */}
-    {/* ======================================================= */}
+        {/* ======================================================= */}
+        {/* Soft background glow                                    */}
+        {/* ======================================================= */}
 
-    <div
-        className="
+        <div
+          className="
         pointer-events-none
         absolute
         left-1/2
@@ -1447,23 +1443,23 @@ const submitLeadForm = async (
         lg:h-[500px]
         lg:w-[500px]
         "
-    />
+        />
 
-    {/* ======================================================= */}
-    {/* Main container                                          */}
-    {/* ======================================================= */}
+        {/* ======================================================= */}
+        {/* Main container                                          */}
+        {/* ======================================================= */}
 
-    <div className="relative mx-auto max-w-[1150px] px-5 sm:px-8">
+        <div className="relative mx-auto max-w-[1150px] px-5 sm:px-8">
 
-        {/* ===================================================== */}
-        {/* SECTION LABEL                                         */}
-        {/* ===================================================== */}
+          {/* ===================================================== */}
+          {/* SECTION LABEL                                         */}
+          {/* ===================================================== */}
 
-        <div className="text-center">
+          <div className="text-center">
 
-        {/* Gaursons */}
-        <p
-            className="
+            {/* Gaursons */}
+            <p
+              className="
             font-display
             text-xl
             text-[#0c3b35]
@@ -1471,13 +1467,13 @@ const submitLeadForm = async (
             animate-[gaursFadeUp_700ms_ease-out_forwards]
             sm:text-2xl
             "
-        >
-            Gaursons
-        </p>
+            >
+              Gaursons
+            </p>
 
-        {/* About divider */}
-        <div
-            className="
+            {/* About divider */}
+            <div
+              className="
             mt-4
             flex
             items-center
@@ -1486,11 +1482,11 @@ const submitLeadForm = async (
             opacity-0
             animate-[gaursFadeUp_700ms_ease-out_150ms_forwards]
             "
-        >
-            <span className="h-px w-14 bg-[#c7a96b]/70 sm:w-20" />
+            >
+              <span className="h-px w-14 bg-[#c7a96b]/70 sm:w-20" />
 
-            <span
-            className="
+              <span
+                className="
                 text-[8px]
                 font-semibold
                 uppercase
@@ -1498,20 +1494,20 @@ const submitLeadForm = async (
                 text-[#c7a96b]
                 sm:text-[9px]
             "
-            >
-            About
-            </span>
+              >
+                About
+              </span>
 
-            <span className="h-px w-14 bg-[#c7a96b]/70 sm:w-20" />
-        </div>
-        </div>
+              <span className="h-px w-14 bg-[#c7a96b]/70 sm:w-20" />
+            </div>
+          </div>
 
-        {/* ===================================================== */}
-        {/* GAURS LOGO                                            */}
-        {/* ===================================================== */}
+          {/* ===================================================== */}
+          {/* GAURS LOGO                                            */}
+          {/* ===================================================== */}
 
-        <div
-        className="
+          <div
+            className="
             mt-10
             flex
             justify-center
@@ -1519,18 +1515,18 @@ const submitLeadForm = async (
             animate-[gaursLogoReveal_900ms_ease-out_300ms_forwards]
             sm:mt-14
         "
-        >
-        <div
-            className="
+          >
+            <div
+              className="
             relative
             flex
             items-center
             justify-center
             "
-        >
-            {/* Soft logo glow */}
-            <div
-            className="
+            >
+              {/* Soft logo glow */}
+              <div
+                className="
                 pointer-events-none
                 absolute
                 inset-0
@@ -1538,12 +1534,12 @@ const submitLeadForm = async (
                 bg-[#d8c38f]/10
                 blur-[50px]
             "
-            />
+              />
 
-            <img
-            src="/Gaurslogo.png"
-            alt="Gaurs - Your Own World"
-            className="
+              <img
+                src="/Gaurslogo.png"
+                alt="Gaurs - Your Own World"
+                className="
                 relative
                 h-auto
                 w-[180px]
@@ -1552,16 +1548,16 @@ const submitLeadForm = async (
                 md:w-[270px]
                 lg:w-[300px]
             "
-            />
-        </div>
-        </div>
+              />
+            </div>
+          </div>
 
-        {/* ===================================================== */}
-        {/* DESCRIPTION                                           */}
-        {/* ===================================================== */}
+          {/* ===================================================== */}
+          {/* DESCRIPTION                                           */}
+          {/* ===================================================== */}
 
-        <div
-        className="
+          <div
+            className="
             mx-auto
             mt-10
             max-w-[1050px]
@@ -1569,11 +1565,11 @@ const submitLeadForm = async (
             animate-[gaursFadeUp_900ms_ease-out_500ms_forwards]
             sm:mt-12
         "
-        >
+          >
 
-        {/* Paragraph 1 */}
-        <p
-            className="
+            {/* Paragraph 1 */}
+            <p
+              className="
             text-center
             text-[12px]
             leading-7
@@ -1583,17 +1579,17 @@ const submitLeadForm = async (
             lg:text-[15px]
             lg:leading-8
             "
-        >
-            For over 25 years, Gaurs has established itself as a leading name in
-            the real estate sector of the National Capital Region. With a legacy
-            of excellence and more than 45 successful projects, the group has
-            consistently delivered quality developments while maintaining a
-            strong commitment to its customers.
-        </p>
+            >
+              For over 25 years, Gaurs has established itself as a leading name in
+              the real estate sector of the National Capital Region. With a legacy
+              of excellence and more than 45 successful projects, the group has
+              consistently delivered quality developments while maintaining a
+              strong commitment to its customers.
+            </p>
 
-        {/* Paragraph 2 */}
-        <p
-            className="
+            {/* Paragraph 2 */}
+            <p
+              className="
             mt-5
             text-center
             text-[12px]
@@ -1604,22 +1600,22 @@ const submitLeadForm = async (
             lg:text-[15px]
             lg:leading-8
             "
-        >
-            Recognized for its construction quality, commitment and innovative
-            approach, Gaurs has developed a strong presence across residential,
-            commercial, retail, hospitality, healthcare and education sectors.
-            Aspire Centurian Park carries forward this vision through grand
-            luxury residences designed for elevated living in Greater Noida (W).
-        </p>
+            >
+              Recognized for its construction quality, commitment and innovative
+              approach, Gaurs has developed a strong presence across residential,
+              commercial, retail, hospitality, healthcare and education sectors.
+              Aspire Centurian Park carries forward this vision through grand
+              luxury residences designed for elevated living in Greater Noida (W).
+            </p>
 
-        </div>
+          </div>
 
-        {/* ===================================================== */}
-        {/* DECORATIVE DIVIDER                                     */}
-        {/* ===================================================== */}
+          {/* ===================================================== */}
+          {/* DECORATIVE DIVIDER                                     */}
+          {/* ===================================================== */}
 
-        <div
-        className="
+          <div
+            className="
             mx-auto
             mt-10
             flex
@@ -1630,28 +1626,28 @@ const submitLeadForm = async (
             animate-[gaursFadeUp_700ms_ease-out_750ms_forwards]
             sm:mt-14
         "
-        >
-        <span className="h-px w-14 bg-[#c7a96b]/40 sm:w-24" />
+          >
+            <span className="h-px w-14 bg-[#c7a96b]/40 sm:w-24" />
 
-        <span
-            className="
+            <span
+              className="
             text-[10px]
             text-[#c7a96b]
             sm:text-xs
             "
-        >
-            ◆
-        </span>
+            >
+              ◆
+            </span>
 
-        <span className="h-px w-14 bg-[#c7a96b]/40 sm:w-24" />
-        </div>
+            <span className="h-px w-14 bg-[#c7a96b]/40 sm:w-24" />
+          </div>
 
-        {/* ===================================================== */}
-        {/* TRUST STATS                                           */}
-        {/* ===================================================== */}
+          {/* ===================================================== */}
+          {/* TRUST STATS                                           */}
+          {/* ===================================================== */}
 
-        <div
-        className="
+          <div
+            className="
             mx-auto
             mt-10
             grid
@@ -1664,16 +1660,16 @@ const submitLeadForm = async (
             sm:mt-12
             sm:grid-cols-4
         "
-        >
-        {[
-            ["25+", "Years of Legacy"],
-            ["45+", "Projects Delivered"],
-            ["NCR", "Strong Presence"],
-            ["1", "Signature Address"],
-        ].map(([value, label], index) => (
-            <div
-            key={label}
-            className={`
+          >
+            {[
+              ["25+", "Years of Legacy"],
+              ["45+", "Projects Delivered"],
+              ["NCR", "Strong Presence"],
+              ["1", "Signature Address"],
+            ].map(([value, label], index) => (
+              <div
+                key={label}
+                className={`
                 px-4
                 py-6
                 text-center
@@ -1682,47 +1678,43 @@ const submitLeadForm = async (
                 hover:bg-[#d8c38f]/5
                 sm:py-8
 
-                ${
-                index < 2
+                ${index < 2
                     ? "border-b border-[#c7a96b]/25 sm:border-b-0"
                     : ""
-                }
+                  }
 
-                ${
-                index % 2 === 0
+                ${index % 2 === 0
                     ? "border-r border-[#c7a96b]/25"
                     : ""
-                }
+                  }
 
-                ${
-                index === 1
+                ${index === 1
                     ? "sm:border-r"
                     : ""
-                }
+                  }
 
-                ${
-                index === 2
+                ${index === 2
                     ? "sm:border-r"
                     : ""
-                }
+                  }
             `}
-            >
-            {/* Number */}
-            <div
-                className="
+              >
+                {/* Number */}
+                <div
+                  className="
                 font-display
                 text-3xl
                 leading-none
                 text-[#0c3b35]
                 sm:text-4xl
                 "
-            >
-                {value}
-            </div>
+                >
+                  {value}
+                </div>
 
-            {/* Label */}
-            <div
-                className="
+                {/* Label */}
+                <div
+                  className="
                 mt-2
                 text-[7px]
                 font-semibold
@@ -1731,53 +1723,53 @@ const submitLeadForm = async (
                 text-[#746f64]
                 sm:text-[8px]
                 "
-            >
-                {label}
-            </div>
-            </div>
-        ))}
-        </div>
+                >
+                  {label}
+                </div>
+              </div>
+            ))}
+          </div>
 
-        {/* ===================================================== */}
-        {/* TAGLINE                                               */}
-        {/* ===================================================== */}
+          {/* ===================================================== */}
+          {/* TAGLINE                                               */}
+          {/* ===================================================== */}
 
-        <div
-        className="
+          <div
+            className="
             mt-10
             text-center
             opacity-0
             animate-[gaursFadeUp_700ms_ease-out_1100ms_forwards]
             sm:mt-14
         "
-        >
-        <p
-            className="
+          >
+            <p
+              className="
             font-display
             text-2xl
             italic
             text-[#0c3b35]
             sm:text-3xl
             "
-        >
-            Your Own World.
-        </p>
+            >
+              Your Own World.
+            </p>
 
-        <p
-            className="
+            <p
+              className="
             mt-2
             text-[7px]
             uppercase
             tracking-[0.35em]
             text-[#c7a96b]
             "
-        >
-            Gaurs
-        </p>
-        </div>
+            >
+              Gaurs
+            </p>
+          </div>
 
-    </div>
-    </section>
+        </div>
+      </section>
 
       {/* ========================================================= */}
       {/* LEGAL / PROJECT OVERVIEW                                    */}
@@ -2250,17 +2242,17 @@ const submitLeadForm = async (
         </div>
       </section>
 
-    {/* ========================================================= */}
-    {/* AMENITIES                                                   */}
-    {/* ========================================================= */}
+      {/* ========================================================= */}
+      {/* AMENITIES                                                   */}
+      {/* ========================================================= */}
 
-    <section
-    id="amenities"
-    className="relative overflow-hidden bg-[#171714] py-20 text-[#f7f0e5] sm:py-24 lg:py-32"
-    >
-    {/* Background glow */}
-    <div
-        className="
+      <section
+        id="amenities"
+        className="relative overflow-hidden bg-[#171714] py-20 text-[#f7f0e5] sm:py-24 lg:py-32"
+      >
+        {/* Background glow */}
+        <div
+          className="
         pointer-events-none
         absolute
         -right-40
@@ -2271,10 +2263,10 @@ const submitLeadForm = async (
         bg-[#d8c38f]/[0.05]
         blur-[120px]
         "
-    />
+        />
 
-    <div
-        className="
+        <div
+          className="
         pointer-events-none
         absolute
         -left-40
@@ -2285,35 +2277,35 @@ const submitLeadForm = async (
         bg-[#0c3b35]/30
         blur-[100px]
         "
-    />
+        />
 
-    <div className="relative mx-auto max-w-[1450px] px-5 sm:px-8 lg:px-12">
+        <div className="relative mx-auto max-w-[1450px] px-5 sm:px-8 lg:px-12">
 
-        {/* ===================================================== */}
-        {/* HEADER                                                 */}
-        {/* ===================================================== */}
+          {/* ===================================================== */}
+          {/* HEADER                                                 */}
+          {/* ===================================================== */}
 
-        <div className="mx-auto max-w-3xl text-center">
+          <div className="mx-auto max-w-3xl text-center">
 
-        <div
-            className="
+            <div
+              className="
             flex
             items-center
             justify-center
             gap-4
             "
-        >
-            <span className="h-px w-10 bg-[#d8c38f]" />
+            >
+              <span className="h-px w-10 bg-[#d8c38f]" />
 
-            <span className="text-[9px] font-semibold uppercase tracking-[0.35em] text-[#d8c38f]">
-            Amenities
-            </span>
+              <span className="text-[9px] font-semibold uppercase tracking-[0.35em] text-[#d8c38f]">
+                Amenities
+              </span>
 
-            <span className="h-px w-10 bg-[#d8c38f]" />
-        </div>
+              <span className="h-px w-10 bg-[#d8c38f]" />
+            </div>
 
-        <h2
-            className="
+            <h2
+              className="
             mt-6
             font-display
             text-5xl
@@ -2321,15 +2313,15 @@ const submitLeadForm = async (
             sm:text-6xl
             lg:text-7xl
             "
-        >
-            Luxury{" "}
-            <span className="text-[#d8c38f]">
-            Lifestyle.
-            </span>
-        </h2>
+            >
+              Luxury{" "}
+              <span className="text-[#d8c38f]">
+                Lifestyle.
+              </span>
+            </h2>
 
-        <p
-            className="
+            <p
+              className="
             mx-auto
             mt-6
             max-w-2xl
@@ -2337,29 +2329,29 @@ const submitLeadForm = async (
             leading-7
             text-[#f7f0e5]/50
             "
-        >
-            Thoughtfully curated spaces designed to elevate wellness,
-            recreation, connection and everyday living.
-        </p>
+            >
+              Thoughtfully curated spaces designed to elevate wellness,
+              recreation, connection and everyday living.
+            </p>
 
-        </div>
+          </div>
 
-        {/* ===================================================== */}
-        {/* CATEGORY TABS                                         */}
-        {/* ===================================================== */}
+          {/* ===================================================== */}
+          {/* CATEGORY TABS                                         */}
+          {/* ===================================================== */}
 
-        <div className="mt-10 flex flex-wrap justify-center gap-2 sm:mt-12">
+          <div className="mt-10 flex flex-wrap justify-center gap-2 sm:mt-12">
 
-        {[
-            ["club", "Clubhouse"],
-            ["nature", "Nature & Wellness"],
-            ["sports", "Sports"],
-        ].map(([key, label]) => (
+            {[
+              ["club", "Clubhouse"],
+              ["nature", "Nature & Wellness"],
+              ["sports", "Sports"],
+            ].map(([key, label]) => (
 
-            <button
-            key={key}
-            onClick={() => setActiveTab(key as AmenityTab)}
-            className={`
+              <button
+                key={key}
+                onClick={() => setActiveTab(key as AmenityTab)}
+                className={`
                 border
                 px-5
                 py-3
@@ -2370,26 +2362,25 @@ const submitLeadForm = async (
                 transition-all
                 duration-300
 
-                ${
-                activeTab === key
+                ${activeTab === key
                     ? "border-[#d8c38f] bg-[#d8c38f] text-[#171714]"
                     : "border-[#d8c38f]/25 text-[#f7f0e5]/55 hover:border-[#d8c38f]/60 hover:text-[#d8c38f]"
-                }
+                  }
             `}
-            >
-            {label}
-            </button>
+              >
+                {label}
+              </button>
 
-        ))}
+            ))}
 
-        </div>
+          </div>
 
-        {/* ===================================================== */}
-        {/* AMENITY IMAGE GRID                                    */}
-        {/* ===================================================== */}
+          {/* ===================================================== */}
+          {/* AMENITY IMAGE GRID                                    */}
+          {/* ===================================================== */}
 
-        <div
-        className="
+          <div
+            className="
             mt-12
             grid
             grid-cols-1
@@ -2399,12 +2390,12 @@ const submitLeadForm = async (
             lg:gap-5
             sm:mt-14
         "
-        >
+          >
 
-        {activeAmenityCards.slice(0, 3).map((item, index) => (
-        <div
-            key={`${activeTab}-${item.name}`}
-            className="
+            {activeAmenityCards.slice(0, 3).map((item, index) => (
+              <div
+                key={`${activeTab}-${item.name}`}
+                className="
             group
             relative
             overflow-hidden
@@ -2414,17 +2405,17 @@ const submitLeadForm = async (
             opacity-0
             animate-[amenityCardReveal_600ms_ease-out_forwards]
             "
-            style={{
-            animationDelay: `${index * 80}ms`,
-            }}
-        >
-            {/* IMAGE */}
-            <div className="relative aspect-[16/10] overflow-hidden">
+                style={{
+                  animationDelay: `${index * 80}ms`,
+                }}
+              >
+                {/* IMAGE */}
+                <div className="relative aspect-[16/10] overflow-hidden">
 
-            <img
-                src={item.image}
-                alt={item.name}
-                className="
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="
                 h-full
                 w-full
                 object-cover
@@ -2433,11 +2424,11 @@ const submitLeadForm = async (
                 ease-out
                 group-hover:scale-110
                 "
-            />
+                  />
 
-            {/* Dark overlay */}
-            <div
-                className="
+                  {/* Dark overlay */}
+                  <div
+                    className="
                 absolute
                 inset-0
                 bg-gradient-to-t
@@ -2449,11 +2440,11 @@ const submitLeadForm = async (
                 duration-500
                 group-hover:opacity-90
                 "
-            />
+                  />
 
-            {/* Gold hover overlay */}
-            <div
-                className="
+                  {/* Gold hover overlay */}
+                  <div
+                    className="
                 absolute
                 inset-0
                 bg-[#d8c38f]/0
@@ -2461,11 +2452,11 @@ const submitLeadForm = async (
                 duration-500
                 group-hover:bg-[#d8c38f]/[0.06]
                 "
-            />
+                  />
 
-            {/* Number */}
-            <div
-                className="
+                  {/* Number */}
+                  <div
+                    className="
                 absolute
                 left-5
                 top-5
@@ -2474,13 +2465,13 @@ const submitLeadForm = async (
                 tracking-[0.2em]
                 text-[#d8c38f]/70
                 "
-            >
-                {String(index + 1).padStart(2, "0")}
-            </div>
+                  >
+                    {String(index + 1).padStart(2, "0")}
+                  </div>
 
-            {/* Top-right decoration */}
-            <div
-                className="
+                  {/* Top-right decoration */}
+                  <div
+                    className="
                 absolute
                 right-5
                 top-5
@@ -2498,9 +2489,9 @@ const submitLeadForm = async (
                 group-hover:border-[#d8c38f]
                 group-hover:bg-[#d8c38f]
                 "
-            >
-                <span
-                className="
+                  >
+                    <span
+                      className="
                     h-1.5
                     w-1.5
                     rounded-full
@@ -2510,12 +2501,12 @@ const submitLeadForm = async (
                     group-hover:scale-[2]
                     group-hover:bg-[#171714]
                 "
-                />
-            </div>
+                    />
+                  </div>
 
-            {/* TEXT */}
-            <div
-                className="
+                  {/* TEXT */}
+                  <div
+                    className="
                 absolute
                 bottom-0
                 left-0
@@ -2523,25 +2514,25 @@ const submitLeadForm = async (
                 p-5
                 sm:p-6
                 "
-            >
-                <div
-                className="
+                  >
+                    <div
+                      className="
                     text-[8px]
                     font-semibold
                     uppercase
                     tracking-[0.25em]
                     text-[#d8c38f]
                 "
-                >
-                {activeTab === "club"
-                    ? "Clubhouse"
-                    : activeTab === "nature"
-                    ? "Nature & Wellness"
-                    : "Sports"}
-                </div>
+                    >
+                      {activeTab === "club"
+                        ? "Clubhouse"
+                        : activeTab === "nature"
+                          ? "Nature & Wellness"
+                          : "Sports"}
+                    </div>
 
-                <h3
-                className="
+                    <h3
+                      className="
                     mt-2
                     font-display
                     text-2xl
@@ -2552,13 +2543,13 @@ const submitLeadForm = async (
                     group-hover:translate-x-1
                     sm:text-3xl
                 "
-                >
-                {item.name}
-                </h3>
+                    >
+                      {item.name}
+                    </h3>
 
-                {/* Gold line */}
-                <div
-                className="
+                    {/* Gold line */}
+                    <div
+                      className="
                     mt-3
                     h-px
                     w-0
@@ -2567,20 +2558,20 @@ const submitLeadForm = async (
                     duration-500
                     group-hover:w-12
                 "
-                />
-            </div>
-            </div>
-        </div>
-        ))}
+                    />
+                  </div>
+                </div>
+              </div>
+            ))}
 
-        </div>
+          </div>
 
-        {/* ===================================================== */}
-        {/* BOTTOM NOTE                                           */}
-        {/* ===================================================== */}
+          {/* ===================================================== */}
+          {/* BOTTOM NOTE                                           */}
+          {/* ===================================================== */}
 
-        <div
-        className="
+          <div
+            className="
             mt-10
             flex
             items-center
@@ -2588,38 +2579,38 @@ const submitLeadForm = async (
             gap-3
             text-center
         "
-        >
-        <span className="h-px w-8 bg-[#d8c38f]/25" />
+          >
+            <span className="h-px w-8 bg-[#d8c38f]/25" />
 
-        <span
-            className="
+            <span
+              className="
             text-[7px]
             uppercase
             tracking-[0.25em]
             text-[#f7f0e5]/30
             "
-        >
-            Designed for elevated living
-        </span>
+            >
+              Designed for elevated living
+            </span>
 
-        <span className="h-px w-8 bg-[#d8c38f]/25" />
+            <span className="h-px w-8 bg-[#d8c38f]/25" />
+          </div>
+
         </div>
-
-    </div>
-    </section>
+      </section>
 
 
       {/* ========================================================= */}
       {/* BENEFITS                                                    */}
       {/* ========================================================= */}
 
-        <section className="relative overflow-hidden bg-[#d8c38f] py-16 sm:py-20 lg:py-24">
+      <section className="relative overflow-hidden bg-[#d8c38f] py-16 sm:py-20 lg:py-24">
         {/* ======================================================= */}
         {/* Background decoration                                    */}
         {/* ======================================================= */}
 
         <div
-            className="
+          className="
             pointer-events-none absolute
             -right-32 -top-32
             h-[320px] w-[320px]
@@ -2633,7 +2624,7 @@ const submitLeadForm = async (
         />
 
         <div
-            className="
+          className="
             pointer-events-none absolute
             -bottom-32 -left-32
             h-[250px] w-[250px]
@@ -2646,7 +2637,7 @@ const submitLeadForm = async (
 
         {/* Right dark panel */}
         <div
-            className="
+          className="
             pointer-events-none absolute
             inset-y-0 right-0
             hidden w-[28%]
@@ -2660,7 +2651,7 @@ const submitLeadForm = async (
         {/* ======================================================= */}
 
         <div className="relative mx-auto max-w-[1400px] px-5 sm:px-8 lg:px-12">
-            <div
+          <div
             className="
                 grid items-center
                 gap-12
@@ -2668,36 +2659,36 @@ const submitLeadForm = async (
                 lg:gap-16
                 xl:grid-cols-[1.1fr_0.9fr]
             "
-            >
+          >
             {/* =================================================== */}
             {/* LEFT CONTENT                                         */}
             {/* =================================================== */}
 
             <div className="relative z-10">
-                {/* Eyebrow */}
-                <div
+              {/* Eyebrow */}
+              <div
                 className="
                     flex items-center gap-3
                     opacity-0
                     animate-[benefitFadeUp_700ms_ease-out_100ms_forwards]
                     sm:gap-4
                 "
-                >
+              >
                 <span className="h-px w-8 bg-[#0c3b35] sm:w-10" />
 
                 <span
-                    className="
+                  className="
                     text-[8px] font-bold uppercase
                     tracking-[0.28em] text-[#0c3b35]
                     sm:text-[9px] sm:tracking-[0.35em]
                     "
                 >
-                    Exclusive Benefits
+                  Exclusive Benefits
                 </span>
-                </div>
+              </div>
 
-                {/* Heading */}
-                <h2
+              {/* Heading */}
+              <h2
                 className="
                     mt-5
                     max-w-3xl
@@ -2714,14 +2705,14 @@ const submitLeadForm = async (
                     lg:mt-7
                     lg:text-8xl
                 "
-                >
+              >
                 Benefits Beyond
                 <br />
                 <span className="text-[#f7f0e5]">Compare.</span>
-                </h2>
+              </h2>
 
-                {/* Description */}
-                <p
+              {/* Description */}
+              <p
                 className="
                     mt-5
                     text-[10px]
@@ -2735,12 +2726,12 @@ const submitLeadForm = async (
                     sm:text-xs
                     sm:tracking-[0.15em]
                 "
-                >
+              >
                 Exclusive benefits worth
-                </p>
+              </p>
 
-                {/* Price */}
-                <div
+              {/* Price */}
+              <div
                 className="
                     mt-1
                     font-display
@@ -2753,12 +2744,12 @@ const submitLeadForm = async (
                     sm:text-6xl
                     md:text-7xl
                 "
-                >
+              >
                 ₹9 Lakhs*
-                </div>
+              </div>
 
-                {/* Supporting line */}
-                <div
+              {/* Supporting line */}
+              <div
                 className="
                     mt-7
                     flex items-center gap-3
@@ -2766,13 +2757,13 @@ const submitLeadForm = async (
                     animate-[benefitFadeUp_700ms_ease-out_650ms_forwards]
                     sm:mt-9
                 "
-                >
+              >
                 <div className="h-px w-8 bg-[#0c3b35]/30 sm:w-12" />
 
                 <span className="text-[8px] uppercase tracking-[0.2em] text-[#0c3b35]/50">
-                    Premium ownership benefits
+                  Premium ownership benefits
                 </span>
-                </div>
+              </div>
             </div>
 
             {/* =================================================== */}
@@ -2780,8 +2771,8 @@ const submitLeadForm = async (
             {/* =================================================== */}
 
             <div className="relative z-10">
-                {/* Desktop decorative frame */}
-                <div
+              {/* Desktop decorative frame */}
+              <div
                 className="
                     pointer-events-none absolute
                     -inset-4
@@ -2789,9 +2780,9 @@ const submitLeadForm = async (
                     border border-[#0c3b35]/15
                     lg:block
                 "
-                />
+              />
 
-                <div
+              <div
                 className="
                     grid
                     grid-cols-2
@@ -2799,16 +2790,16 @@ const submitLeadForm = async (
                     bg-[#d8c38f]/30
                     shadow-[0_20px_70px_rgba(12,59,53,0.12)]
                 "
-                >
+              >
                 {[
-                    "4 ACs",
-                    "1 LED TV",
-                    "1 Washing Machine",
-                    "1 Hob & Chimney",
-                    "4 Geysers",
-                    "And More",
+                  "4 ACs",
+                  "1 LED TV",
+                  "1 Washing Machine",
+                  "1 Hob & Chimney",
+                  "4 Geysers",
+                  "And More",
                 ].map((item, index) => (
-                    <div
+                  <div
                     key={item}
                     className="
                         group relative
@@ -2828,12 +2819,12 @@ const submitLeadForm = async (
                         lg:p-8
                     "
                     style={{
-                        animationDelay: `${650 + index * 100}ms`,
+                      animationDelay: `${650 + index * 100}ms`,
                     }}
-                    >
+                  >
                     {/* Gold hover sweep */}
                     <div
-                        className="
+                      className="
                         pointer-events-none absolute
                         -right-10 -top-10
                         h-24 w-24
@@ -2848,7 +2839,7 @@ const submitLeadForm = async (
 
                     {/* Number */}
                     <span
-                        className="
+                      className="
                         relative z-10
                         text-[8px]
                         font-medium
@@ -2857,12 +2848,12 @@ const submitLeadForm = async (
                         sm:text-[9px]
                         "
                     >
-                        {String(index + 1).padStart(2, "0")}
+                      {String(index + 1).padStart(2, "0")}
                     </span>
 
                     {/* Icon-like decorative mark */}
                     <div
-                        className="
+                      className="
                         relative z-10
                         mt-5
                         flex h-8 w-8
@@ -2876,7 +2867,7 @@ const submitLeadForm = async (
                         sm:h-10 sm:w-10
                         "
                     >
-                        <span
+                      <span
                         className="
                             h-1.5 w-1.5
                             rounded-full
@@ -2886,12 +2877,12 @@ const submitLeadForm = async (
                             group-hover:scale-[2]
                             group-hover:bg-[#0c3b35]
                         "
-                        />
+                      />
                     </div>
 
                     {/* Benefit */}
                     <div
-                        className="
+                      className="
                         relative z-10
                         mt-5
                         font-display
@@ -2906,12 +2897,12 @@ const submitLeadForm = async (
                         lg:text-3xl
                         "
                     >
-                        {item}
+                      {item}
                     </div>
 
                     {/* Bottom line */}
                     <div
-                        className="
+                      className="
                         absolute bottom-0 left-0
                         h-[2px] w-0
                         bg-[#d8c38f]
@@ -2919,17 +2910,17 @@ const submitLeadForm = async (
                         group-hover:w-full
                         "
                     />
-                    </div>
+                  </div>
                 ))}
-                </div>
+              </div>
             </div>
-            </div>
+          </div>
 
-            {/* ======================================================= */}
-            {/* DISCLAIMER                                               */}
-            {/* ======================================================= */}
+          {/* ======================================================= */}
+          {/* DISCLAIMER                                               */}
+          {/* ======================================================= */}
 
-            <p
+          <p
             className="
                 relative z-10
                 mt-7
@@ -2943,11 +2934,11 @@ const submitLeadForm = async (
                 sm:text-[8px]
                 sm:tracking-[0.15em]
             "
-            >
+          >
             *Terms & Conditions Apply
-            </p>
+          </p>
         </div>
-        </section>
+      </section>
 
       {/* ========================================================= */}
       {/* PRICING                                                     */}
@@ -3051,30 +3042,30 @@ const submitLeadForm = async (
       {/* PAYMENT PLAN                                                */}
       {/* ========================================================= */}
 
-        <section className="relative overflow-hidden bg-[#0c3b35] py-20 text-[#f7f0e5] sm:py-24 lg:py-32">
+      <section className="relative overflow-hidden bg-[#0c3b35] py-20 text-[#f7f0e5] sm:py-24 lg:py-32">
         {/* Background glow */}
         <div className="pointer-events-none absolute -left-40 top-1/2 h-[500px] w-[500px] -translate-y-1/2 rounded-full bg-[#d8c38f]/[0.05] blur-[120px]" />
 
         <div className="pointer-events-none absolute -right-40 top-0 h-[450px] w-[450px] rounded-full bg-[#d8c38f]/[0.06] blur-[120px]" />
 
         <div className="relative mx-auto max-w-[1250px] px-5 sm:px-8">
-            {/* ======================================================= */}
-            {/* HEADER                                                   */}
-            {/* ======================================================= */}
+          {/* ======================================================= */}
+          {/* HEADER                                                   */}
+          {/* ======================================================= */}
 
-            <div className="text-center">
+          <div className="text-center">
             <div className="flex items-center justify-center gap-4 opacity-0 animate-[paymentFadeUp_700ms_ease-out_forwards]">
-                <span className="h-px w-8 bg-[#d8c38f] sm:w-12" />
+              <span className="h-px w-8 bg-[#d8c38f] sm:w-12" />
 
-                <span className="text-[8px] font-semibold uppercase tracking-[0.3em] text-[#d8c38f] sm:text-[9px] sm:tracking-[0.35em]">
+              <span className="text-[8px] font-semibold uppercase tracking-[0.3em] text-[#d8c38f] sm:text-[9px] sm:tracking-[0.35em]">
                 The Great Meloddy
-                </span>
+              </span>
 
-                <span className="h-px w-8 bg-[#d8c38f] sm:w-12" />
+              <span className="h-px w-8 bg-[#d8c38f] sm:w-12" />
             </div>
 
             <h2
-                className="
+              className="
                 mt-5
                 font-display
                 text-[58px]
@@ -3087,11 +3078,11 @@ const submitLeadForm = async (
                 lg:text-8xl
                 "
             >
-                30:70
+              30:70
             </h2>
 
             <p
-                className="
+              className="
                 mt-4
                 text-[9px]
                 font-semibold
@@ -3103,27 +3094,27 @@ const submitLeadForm = async (
                 sm:text-[10px]
                 "
             >
-                Payment Plan
+              Payment Plan
             </p>
 
             <div
-                className="
+              className="
                 mx-auto mt-6 h-px
                 w-12 bg-[#d8c38f]
                 opacity-0
                 animate-[paymentLineReveal_800ms_ease-out_500ms_forwards]
                 "
             />
-            </div>
+          </div>
 
-            {/* ======================================================= */}
-            {/* PAYMENT TIMELINE                                         */}
-            {/* ======================================================= */}
+          {/* ======================================================= */}
+          {/* PAYMENT TIMELINE                                         */}
+          {/* ======================================================= */}
 
-            <div className="relative mt-16 sm:mt-20">
+          <div className="relative mt-16 sm:mt-20">
             {/* Desktop connecting line */}
             <div
-                className="
+              className="
                 absolute
                 left-[10%]
                 right-[10%]
@@ -3137,7 +3128,7 @@ const submitLeadForm = async (
 
             {/* Animated progress line */}
             <div
-                className="
+              className="
                 absolute
                 left-[10%]
                 top-[56px]
@@ -3151,36 +3142,35 @@ const submitLeadForm = async (
             />
 
             <div className="grid gap-0 md:grid-cols-5">
-                {[
+              {[
                 ["10%", "On Booking"],
                 ["10%", "Within 45 Days"],
                 ["10%", "Within 100 Days"],
                 ["60%", "On CC / Deemed CC"],
                 ["10%", "On Offer of Possession"],
-                ].map(([value, label], index) => (
+              ].map(([value, label], index) => (
                 <div
-                    key={label}
-                    className={`
+                  key={label}
+                  className={`
                     group relative
                     border-[#d8c38f]/15
                     px-4 py-7
                     text-center
                     opacity-0
                     animate-[paymentCardReveal_700ms_ease-out_forwards]
-                    ${
-                        index !== 4
-                        ? "border-b md:border-b-0 md:border-r"
-                        : ""
+                    ${index !== 4
+                      ? "border-b md:border-b-0 md:border-r"
+                      : ""
                     }
                     sm:px-6
                     md:py-4
                     `}
-                    style={{
+                  style={{
                     animationDelay: `${650 + index * 180}ms`,
-                    }}
+                  }}
                 >
-                    {/* Number */}
-                    <span
+                  {/* Number */}
+                  <span
                     className="
                         absolute
                         left-4 top-4
@@ -3189,12 +3179,12 @@ const submitLeadForm = async (
                         text-[#d8c38f]/35
                         sm:left-5
                     "
-                    >
+                  >
                     0{index + 1}
-                    </span>
+                  </span>
 
-                    {/* Timeline node */}
-                    <div
+                  {/* Timeline node */}
+                  <div
                     className="
                         relative z-10
                         mx-auto
@@ -3208,9 +3198,9 @@ const submitLeadForm = async (
                         group-hover:border-[#d8c38f]
                         group-hover:shadow-[0_0_35px_rgba(216,195,143,0.15)]
                     "
-                    >
+                  >
                     <div
-                        className="
+                      className="
                         flex h-[54px] w-[54px]
                         items-center justify-center
                         rounded-full
@@ -3219,7 +3209,7 @@ const submitLeadForm = async (
                         group-hover:bg-[#d8c38f]
                         "
                     >
-                        <span
+                      <span
                         className="
                             font-display
                             text-2xl
@@ -3228,14 +3218,14 @@ const submitLeadForm = async (
                             duration-500
                             group-hover:text-[#171714]
                         "
-                        >
+                      >
                         {value}
-                        </span>
+                      </span>
                     </div>
-                    </div>
+                  </div>
 
-                    {/* Label */}
-                    <div
+                  {/* Label */}
+                  <div
                     className="
                         mx-auto mt-7
                         max-w-[145px]
@@ -3250,12 +3240,12 @@ const submitLeadForm = async (
                         group-hover:text-[#f7f0e5]
                         sm:text-[9px]
                     "
-                    >
+                  >
                     {label}
-                    </div>
+                  </div>
 
-                    {/* Hover underline */}
-                    <div
+                  {/* Hover underline */}
+                  <div
                     className="
                         mx-auto mt-4
                         h-px
@@ -3265,17 +3255,17 @@ const submitLeadForm = async (
                         duration-500
                         group-hover:w-10
                     "
-                    />
+                  />
                 </div>
-                ))}
+              ))}
             </div>
-            </div>
+          </div>
 
-            {/* ======================================================= */}
-            {/* PAYMENT HIGHLIGHT                                        */}
-            {/* ======================================================= */}
+          {/* ======================================================= */}
+          {/* PAYMENT HIGHLIGHT                                        */}
+          {/* ======================================================= */}
 
-            <div
+          <div
             className="
                 mx-auto mt-12
                 max-w-3xl
@@ -3286,21 +3276,21 @@ const submitLeadForm = async (
                 animate-[paymentFadeUp_700ms_ease-out_1500ms_forwards]
                 sm:mt-16
             "
-            >
+          >
             <p className="text-[8px] uppercase tracking-[0.18em] text-[#f7f0e5]/35 sm:text-[9px]">
-                Payment plan valid for a limited period
+              Payment plan valid for a limited period
             </p>
 
             <p className="mt-2 text-[8px] uppercase tracking-[0.15em] text-[#d8c38f]/70 sm:text-[9px]">
-                *Terms & Conditions Apply
+              *Terms & Conditions Apply
             </p>
-            </div>
+          </div>
 
-            {/* ======================================================= */}
-            {/* CTA                                                       */}
-            {/* ======================================================= */}
+          {/* ======================================================= */}
+          {/* CTA                                                       */}
+          {/* ======================================================= */}
 
-            <div
+          <div
             className="
                 mt-9
                 text-center
@@ -3308,10 +3298,10 @@ const submitLeadForm = async (
                 animate-[paymentFadeUp_700ms_ease-out_1700ms_forwards]
                 sm:mt-10
             "
-            >
+          >
             <button
-                onClick={() => setIsModalOpen(true)}
-                className="
+              onClick={() => setIsModalOpen(true)}
+              className="
                 group
                 inline-flex
                 items-center
@@ -3335,20 +3325,20 @@ const submitLeadForm = async (
                 sm:tracking-[0.25em]
                 "
             >
-                Get Complete Payment Plan
+              Get Complete Payment Plan
 
-                <ArrowRight
+              <ArrowRight
                 className="
                     h-3.5 w-3.5
                     transition-transform
                     duration-300
                     group-hover:translate-x-1
                 "
-                />
+              />
             </button>
-            </div>
+          </div>
         </div>
-        </section>
+      </section>
 
       {/* ========================================================= */}
       {/* LOCATION                                                    */}
@@ -3627,7 +3617,7 @@ const submitLeadForm = async (
       {/* ========================================================= */}
       {/* FOOTER                                                      */}
       {/* ========================================================= */}
-{/* 
+      {/* 
       <footer className="border-t border-[#d8c38f]/15 bg-[#171714] pb-28 pt-10 text-[#f7f0e5] md:pb-10">
         <div className="mx-auto flex max-w-[1400px] flex-col justify-between gap-7 px-5 sm:px-8 lg:flex-row lg:items-center lg:px-12">
           <div>
